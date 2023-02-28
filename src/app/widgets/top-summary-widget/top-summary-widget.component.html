@@ -1,0 +1,45 @@
+<c-row>
+
+  <c-col md="12" xl="4">
+      <app-flip-card [flip]="flipDiv" (click)="onClick()">
+        <div front><app-total-sales-frontside [mainFilter]="mainFilter"></app-total-sales-frontside></div>
+        <div back><app-total-sales-backside [mainFilter]="mainFilter"></app-total-sales-backside></div>
+      </app-flip-card>
+  </c-col>
+  <c-col md="12" xl="4">
+    <c-card class="mb-4 card" style="--cui-card-cap-bg:#00aced; color: white;">
+      <c-card-header class="card-header position-relative d-flex justify-content-center align-items-center pad-top-xs">
+        <c-col class="card-body" style="padding-bottom: 0.2em;">
+          <h5 cCardTitle class="fs-4 fw-semibold">188 Adet</h5>
+          <h6 cCardSubtitle class="mb-2">
+            Toplam Sipariş Adedi
+          </h6>
+          <div class="progress-bar-percentage-sm pad-top-sm">Hedef</div>
+          <c-progress class="my-2">
+            <c-progress-bar [value]="35" class="opaque progress-bar-percentage-l">20.8%</c-progress-bar>
+          </c-progress>
+        </c-col>
+      </c-card-header>
+      <c-card-body class="text-center card-body row" style="color:#2B3467">
+        <c-col class="col ng-star-inserted">
+          <div class="fs-5 fw-semibold">900</div>
+          <div class="fs-5 fw-semibold">Bütçe</div>
+        </c-col>
+        <div class="vr ng-star-inserted"></div>
+        <c-col class="col ng-star-inserted">
+          <div class="fs-5 fw-semibold">188</div>
+          <div class="fs-5 fw-semibold">Fiili</div>
+        </c-col>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col md="12" xl="4">
+    <c-widget-stat-b #widgetStatB2inv="cWidgetStatB" [title]="'Widget title'" class="mb-4" color="primary" inverse
+      text="Lorem ipsum dolor sit amet enim." value="75.9%">
+      <br><br><br>
+      <c-progress [white]="widgetStatB2inv.inverse" class="my-2" thin>
+        <c-progress-bar [value]="75.9"></c-progress-bar>
+      </c-progress>
+    </c-widget-stat-b>
+  </c-col>
+</c-row>

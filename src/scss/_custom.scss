@@ -1,0 +1,105 @@
+// Here you can add other styles
+$viva-magenta: #D61C4E;
+$aqua-25: #84DFFF;
+$aqua-50: #3399ff7a;
+$aqua-75: #2B3467;
+$opaque-50: #22EAAA;
+$gold-50: #FAC213;
+
+
+.aqua {
+    background-color: $aqua-50;
+    color: $white;
+}
+
+.aqua-light {
+    background-color: $aqua-25;
+    color: $aqua-75;
+}
+
+.magenta {
+    background-color: $viva-magenta;
+    color: $white;
+}
+
+.opaque {
+    background-color: $opaque-50;
+    color: $black;
+}
+
+.gold {
+    background-color: $gold-50;
+    color: $black;
+}
+
+// Paddings
+
+.pad-top-xs {
+    padding-top: 0.3em !important;
+}
+
+.pad-top-sm {
+    padding-top: 0.6em !important;
+}
+
+.pad-top-md {
+    padding-top: 0.9em !important;
+}
+
+.pad-top-lg {
+    padding-top: 1.2em !important;
+}
+
+.pad-top-xl {
+    padding-top: 1.5em !important;
+}
+
+.pad-top-xxl {
+    padding-top: 2em !important;
+}
+
+
+.pad-right-xs {
+    padding-right: 0.3em !important;
+}
+
+.pad-right-sm {
+    padding-right: 0.6em !important;
+}
+
+.pad-right-md {
+    padding-right: 0.9em !important;
+}
+
+.pad-right-lg {
+    padding-right: 1.2em !important;
+}
+
+.pad-right-xl {
+    padding-right: 1.5em !important;
+}
+
+.pad-right-xxl {
+    padding-right: 2em !important;
+}
+
+
+
+.progress-bar-percentage-sm {
+    font-size: small;
+    font-weight: bold;
+}
+.progress-bar-percentage-l {
+    font-size: 1.2em !important;
+    font-weight: bold;
+}
+
+.progress-bar-percentage-xl {
+    font-size: 1.5em !important;
+    font-weight: bold;
+}
+
+.progress-bar-percentage-xxl {
+    font-size: 2em !important;
+    font-weight: bold;
+}

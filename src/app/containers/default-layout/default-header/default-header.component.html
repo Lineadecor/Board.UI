@@ -1,0 +1,74 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+<ng-container>
+  <c-container [fluid]="true">
+    <button
+      toggle="visible"
+      cHeaderToggler
+      [cSidebarToggle]="sidebarId"
+      class="ps-1"
+    >
+   <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+    </button>
+    <c-header-nav class="d-none d-lg-flex me-auto">
+      <div class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+          <select class="form-select form-select-sm " aria-label=".form-select-sm example" style="margin-right: 1em;"
+          [(ngModel)]="mainFilter.year" >
+          <option *ngFor="let year of years" [value]="year">{{year}}</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+          [(ngModel)]="mainFilter.currency">
+            <option *ngFor="let currency of currencies" [value]="currency">{{currency}}</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button cButton color="success" style="color: cornsilk;" (click)="refreshPage()"><fa-icon [icon]="['fas', 'rotate']"></fa-icon> Yenile</button>
+        </div>
+      </div>
+    </c-header-nav>
+
+    <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+    </c-header-nav>
+
+  </c-container>
+  <!--c-header-divider></c-header-divider>
+  <c-container [fluid]="true">
+    <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+  </c-container-->
+</ng-container>
+<!--</c-header>-->
+
+<ng-template #userDropdown>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-0"
+    >
+      <c-avatar
+        cTextColor="primary"
+        shape="rounded-1"
+        size="md"
+        src="./assets/img/avatars/8.jpg"
+        status="success"
+      >
+      </c-avatar>
+    </button>
+    <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+      
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <fa-icon [icon]="['far', 'circle-user']"></fa-icon>
+          Lock Account
+        </a>
+      </li>
+      <li></li>
+    </ul>
+  </c-dropdown>
+</ng-template>
+
