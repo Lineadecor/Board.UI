@@ -1,4 +1,4 @@
-<app-top-summary-widget [mainFilter]="mainFilter"></app-top-summary-widget>
+<app-top-summary-widget></app-top-summary-widget>
 <c-row>
     <c-col xs>
       <c-card class="mb-4">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="float-end ms-1 text-nowrap">
                       <small class="text-medium-emphasis">
-                        {{ channel.budget | currency:mainFilter.currency:'symbol':'4.0-0':'tr' }} / {{ channel.realized | currency:mainFilter.currency :'symbol':'4.0-0':'tr' }}
+                        {{ channel.budget | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }} / {{ channel.realized | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}
                       </small>
                     </div>
                   </div>

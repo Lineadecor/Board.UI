@@ -4,16 +4,16 @@ export const navItems: INavData[] = [
   {
     name: 'Yönetim',
     url: '/yonetim/dashboard',
-    iconComponent: ['fas', 'home']
+    iconComponent: ["fas", "home"]
   },
   {
     name: 'Finans',
-    url: '/finans/dashboard',
-    iconComponent: ['fas', 'comments-dollar']
+    url: '/dashboard',
+    iconComponent: ["fas", "comments-dollar"]
   },
   {
     name: 'Satış Pazarlama',
-    url: '/satis/dashboard',
-    iconComponent: ['fas', 'briefcase']
+    url: '/dashboard',
+    iconComponent: ["fas", "briefcase"]
   },
 ];

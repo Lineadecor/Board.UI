@@ -10,11 +10,6 @@ const routes: Routes = [
     },
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'dashboard',
-      },
-      {
         path: 'dashboard',
         component: YonetimDashboardComponent,
         data: {

@@ -31,7 +31,7 @@ import { WidgetsModule } from 'src/app/widgets/widgets.module';
     WidgetsModule,
     HttpClientModule
   ],
-  providers: [ 
+  providers: [
     { provide: LOCALE_ID, useValue: 'tr' },
   ],
 })

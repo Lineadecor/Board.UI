@@ -1,6 +1,5 @@
 import { Component,  OnInit } from '@angular/core';
 import { ArcElement, Chart, PieController } from 'chart.js/auto';
-import { BehaviorSubject } from 'rxjs';
 import { SalesChannelDashboardSummaryDto } from 'src/app/@core/data/dtos/sales-channel-dashboard-summary-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
@@ -89,7 +88,7 @@ export class YonetimDashboardComponent  implements OnInit {
               dataArr.map(data => {
                   sum = sum + data  ;
               });
-              let percentage = (value*100 / sum).toFixed(2)+"%";
+              let percentage = (value*100 / sum).toFixed(0)+"%";
               return  percentage;
           }
           }

@@ -1,18 +1,28 @@
 <!--sidebar-->
-<c-sidebar #sidebar="cSidebar" class="d-print-none sidebar sidebar-fixed" id="sidebar" visible>
-  <c-sidebar-brand [brandFull]="{
+<c-sidebar
+  #sidebar="cSidebar"
+  class="d-print-none sidebar sidebar-fixed"
+  id="sidebar"
+  visible
+>
+  <c-sidebar-brand
+    [brandFull]="{
       src: 'assets/img/brand/lineadecor-board-logo.svg',
       width: 200,
       height: 46,
-      alt: 'Lineadecor Logo'
-    }" [brandNarrow]="{
-      src: 'assets/img/brand/lineadecor-signet-white.svg',
+      alt: 'CoreUI Logo'
+    }"
+    [brandNarrow]="{
+      src: 'assets/img/brand/coreui-signet-white.svg',
       width: 46,
       height: 46,
-      alt: 'Lineadecor Logo'
-    }" routerLink="./">
+      alt: 'CoreUI Logo'
+    }"
+    routerLink="./"
+  >
   </c-sidebar-brand>
-
+    <perfect-scrollbar [config]="perfectScrollbarConfig">
+  <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
   <c-sidebar-nav dropdownmode="close" role="nav" class="sidebar-nav">
     <div class="nav-item" *ngFor="let item of navItems">
       <a routerlinkactive="active" class="nav-link" href="{{item.url}}">
@@ -20,15 +30,18 @@
       </a>
     </div>
   </c-sidebar-nav>
-
-  <c-sidebar-toggler *ngIf="!sidebar.narrow" toggle="unfoldable" cSidebarToggle="sidebar"></c-sidebar-toggler>
+    </perfect-scrollbar>
+  <c-sidebar-toggler
+    *ngIf="!sidebar.narrow"
+    toggle="unfoldable"
+    cSidebarToggle="sidebar"
+  ></c-sidebar-toggler>
 </c-sidebar>
 
 <!--main-->
 <div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
   <!--app-header-->
-  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"
-    [mainFilter]="mainFilter"></app-default-header>
+  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"></app-default-header>
   <!--app-body-->
   <div class="body flex-grow-1 px-3">
     <c-container breakpoint="lg" class="h-auto">

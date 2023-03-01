@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { navItems } from 'src/app/_nav';
+import { navItems } from './_nav';
 
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +17,9 @@ import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 export class DefaultLayoutComponent {
 
   public navItems = navItems;
+  public perfectScrollbarConfig = {
+    suppressScrollX: true,
+  };
   mainFilter: DefaultFilter;
   
   constructor(
@@ -33,3 +36,5 @@ export class DefaultLayoutComponent {
   }
   
 }
+
+  

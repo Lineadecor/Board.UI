@@ -44,6 +44,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { YonetimModule } from './pages/yonetim/yonetim.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { MainFilterService } from './@core/services/filter-values.service';
 
 
 
@@ -66,6 +68,7 @@ const APP_CONTAINERS = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    PerfectScrollbarModule,
     AvatarModule,
     BreadcrumbModule,
     FooterModule,
@@ -95,6 +98,7 @@ const APP_CONTAINERS = [
   providers: [
     IconSetService, 
     CookieService,
+    MainFilterService,
     { provide: LOCALE_ID, useValue: 'tr' },
   ],
   bootstrap: [AppComponent]
