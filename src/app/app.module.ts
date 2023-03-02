@@ -37,7 +37,7 @@ import {
 } from './containers';
 
 
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -105,6 +105,7 @@ const APP_CONTAINERS = [
     CookieService,
     MainFilterService,
     { provide: LOCALE_ID, useValue: 'tr' },
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })

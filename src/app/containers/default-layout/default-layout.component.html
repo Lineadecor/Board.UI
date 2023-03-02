@@ -25,7 +25,7 @@
   <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
   <c-sidebar-nav dropdownmode="close" role="nav" class="sidebar-nav">
     <div class="nav-item" *ngFor="let item of navItems">
-      <a routerlinkactive="active" class="nav-link" href="{{item.url}}">
+      <a routerlinkactive="active" class="nav-link"  routerLink="{{item.url}}">
         <span class="nav-icon"><fa-icon [icon]="item.iconComponent"></fa-icon></span> {{item.name}}
       </a>
     </div>
