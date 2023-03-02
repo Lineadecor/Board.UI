@@ -1,7 +1,11 @@
 <!--<c-header class="mb-4 d-print-none" position="sticky">-->
 <ng-container>
   <c-container [fluid]="true">
-    <button toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId" class="ps-1">
+    <button toggle="visible" cHeaderToggler [cSidebarToggle]="sidebarId" class="ps-1" cTooltip="Show/Hide Menu">
+      <fa-icon [icon]="['fas','bars']"></fa-icon>
+    </button>
+    <button cButton color="dark" variant="ghost" (click)="fullScreen()" class="ps-1" cTooltip="Full screen">
+      <fa-icon [icon]="['fas', 'up-right-and-down-left-from-center']"></fa-icon> 
     </button>
     <c-header-nav class="d-none d-lg-flex me-auto">
       <div class="row row-cols-lg-auto g-3 align-items-center">
@@ -11,15 +15,24 @@
             <option *ngFor="let year of years" [value]="year">{{year}}</option>
           </select>
         </div>
+      <div class="col-12">
+        <app-multi-select-dropdown
+          [list]="list"
+          [checkedList]="checkedList"
+          (shareCheckedList)="shareCheckedList($event)" 
+          (shareIndividualCheckedList)="shareIndividualCheckedList($event)">
+        </app-multi-select-dropdown>
+      </div>
         <div class="col-12">
           <select class="form-select form-select-sm " aria-label=".form-select-sm example" style="margin-right: 1em;"
             [(ngModel)]="mainFilter.currency">
             <option *ngFor="let currency of currencies" [value]="currency">{{currency}}</option>
           </select>
         </div>
-
         <div class="col-12">
-          <button cButton color="success" style="color: white;" (click)="refreshPage()">Yenile</button>
+          <button cButton style="margin-right: 1em; color: white;" (click)="refreshPage()" color="success">
+            <fa-icon [icon]="['fas', 'refresh']"></fa-icon> Yenile
+          </button>
         </div>
       </div>
     </c-header-nav>
@@ -41,11 +54,11 @@
     </button>
     <ul cDropdownMenu class="pt-0 pr-5 w-auto">
       <li>
-        <h6 cDropdownHeader class="bg-light fw-semibold py-2">Account</h6>
+        <h6 cDropdownHeader class="bg-light fw-semibold py-2">Hesap</h6>
       </li>
       <li>
         <a routerLink="./" cDropdownItem>
-          Lock Account
+          <fa-icon [icon]="['fas', 'coffee']"></fa-icon>  Oturumu kapat
         </a>
       </li>
       <li></li>

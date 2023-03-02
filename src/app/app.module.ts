@@ -21,6 +21,7 @@ import {
   SharedModule,
   SidebarModule,
   TabsModule,
+  TooltipModule,
   UtilitiesModule,
   WidgetModule,
   
@@ -46,6 +47,7 @@ import { YonetimModule } from './pages/yonetim/yonetim.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MainFilterService } from './@core/services/filter-values.service';
+import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
 
 
 
@@ -61,7 +63,9 @@ const APP_CONTAINERS = [
 @NgModule({
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS
+    MultiSelectDropdownComponent,
+    ...APP_CONTAINERS,
+    
   ],
   imports: [
     BrowserModule,
@@ -80,6 +84,7 @@ const APP_CONTAINERS = [
     NavModule,
     ButtonModule,
     FormModule,
+    TooltipModule,
     UtilitiesModule,
     ButtonGroupModule,
     ReactiveFormsModule,

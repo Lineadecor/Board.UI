@@ -12,7 +12,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 })
 export class YonetimDashboardComponent  implements OnInit {
   
-  mainFilter :DefaultFilter= new DefaultFilter();
+  public mainFilter :DefaultFilter= new DefaultFilter();
   
   constructor(
     private salesChannelService: SalesChannelService,
@@ -24,11 +24,9 @@ export class YonetimDashboardComponent  implements OnInit {
   }
  
   salesChannelSummaryData= new Array<SalesChannelDashboardSummaryDto>();
-  chart: any;
 
   ngOnInit(): void {
     this.getSalesChannelSummaryData();
-    this.getChart();
     
   }
 
@@ -50,54 +48,7 @@ export class YonetimDashboardComponent  implements OnInit {
 
  
 
-  data = {
-    labels: [
-      'Yurtiçi',
-      'Yurtdışı'
-    ],
-    datasets: [{
-      label: 'Toplam satış hedefleri',
-      data: [75, 25],
-      backgroundColor: [
-        'rgb(54, 162, 235)',
-        'rgb(255, 205, 86)'
-      ],
-      hoverOffset: 4
-    }]
-  };
-
-
-  getChart() {
-    this.chart = new Chart("MyChart", {
-      type: 'pie', //this denotes tha type of chart
-
-      data: this.data,
-      options: {
-        maintainAspectRatio: false,
-        plugins: {
-          legend:{
-            display:true,
-            position: "right"
-          },
-          datalabels: {
-            color: 'white',
-            rotation: 0,
-            formatter: (value, ctx) => {
-              let sum = 0;
-              let dataArr = ctx.chart.data.datasets[0].data as Array<number>;
-              dataArr.map(data => {
-                  sum = sum + data  ;
-              });
-              let percentage = (value*100 / sum).toFixed(0)+"%";
-              return  percentage;
-          }
-          }
-        }
-      }
-      
-    });
-  }
-
+  
 
 
 }

@@ -1,8 +1,8 @@
-<c-widget-stat-b [title]="'Toplam Satış Miktarı'" class="mb-4 aqua text-inverse"
-text="01 Ocak 2023'ten bu yana olan sonuçlar." value="{{'4900130' | currency: mainFilter?.currency }}">
+<c-widget-stat-b [title]="'Toplam Satış Tutarı'" class="mb-4 aqua-light text-inverse"
+text="" value="{{totalSales | currency: mainFilter.currency :'symbol':'4.0-0':'tr'}}">
 <br />
 <div class="chart-container" style="height:100%; width:100%" >
-  <canvas id="MyChart" width="150" height="100">{{ chart }}</canvas>
+  <canvas id="salesAmountChart" width="150" height="100">{{ chart }}</canvas>
 </div>
 </c-widget-stat-b>
 

@@ -18,7 +18,8 @@ import { TopSummaryWidgetComponent } from './top-summary-widget/top-summary-widg
 import { TotalSalesFrontsideComponent } from './top-summary-widget/total-sales/frontside/total-sales-frontside.component';
 import { TotalSalesBacksideComponent } from './top-summary-widget/total-sales/backside/total-sales-backside.component';
 import { FlipCardModule } from "src/app/@core/components/components"
-
+import { TotalBudgetsBacksideComponent } from './top-summary-widget/total-budgets/backside/total-budgets-backside.component';
+import { TotalBudgetsFrontsideComponent } from './top-summary-widget/total-budgets/frontside/total-budgets-frontside.component';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { FlipCardModule } from "src/app/@core/components/components"
     WidgetsComponent,
     TopSummaryWidgetComponent,
     TotalSalesFrontsideComponent,
-    TotalSalesBacksideComponent
+    TotalSalesBacksideComponent,
+    TotalBudgetsBacksideComponent,
+    TotalBudgetsFrontsideComponent,
   ],
   imports: [
     CommonModule,

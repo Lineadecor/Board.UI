@@ -44,8 +44,9 @@
                       <strong>{{ channel.percentage }}%</strong>
                     </div>
                     <div class="float-end ms-1 text-nowrap">
-                      <small class="text-medium-emphasis">
-                        {{ channel.budget | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }} / {{ channel.realized | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}
+                      <small class="text-medium-emphasis" style="font-weight: bold;">
+                        <span style="font-size: x-small;">Bütçe: </span>{{ channel.budget | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                         / <span style="font-size: x-small;">Fiili: </span>{{ channel.realized | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}
                       </small>
                     </div>
                   </div>
@@ -57,7 +58,7 @@
                   </c-progress>
                 </td>
                 <td>
-                  <div class="fw-semibold text-nowrap">Detay</div>
+                  <div class="fw-semibold text-nowrap"></div>
                 </td>
               </tr>
             </tbody>

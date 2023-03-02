@@ -1,6 +1,6 @@
 // Here you can add other styles
 $viva-magenta: #D61C4E;
-$aqua-25: #84DFFF;
+$aqua-25: #00aced;
 $aqua-50: #3399ff7a;
 $aqua-75: #2B3467;
 $opaque-50: #22EAAA;
@@ -102,4 +102,8 @@ $gold-50: #FAC213;
 .progress-bar-percentage-xxl {
     font-size: 2em !important;
     font-weight: bold;
+}
+.budget-bottom-summary {
+    padding: 0, 0.5rem;
+    color: rgb(26, 18, 11);
 }

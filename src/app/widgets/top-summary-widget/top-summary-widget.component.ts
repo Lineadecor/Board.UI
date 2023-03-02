@@ -1,8 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { FlipAnimation } from 'src/app/@core/animations';
-import Chart from 'chart.js/auto';
-import { getRelativePosition } from 'chart.js/helpers';
-import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 
 @Component({
   selector: 'app-top-summary-widget',
@@ -11,9 +8,14 @@ import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
   animations: FlipAnimation.animations
 })
 export class TopSummaryWidgetComponent {
-  @Input() mainFilter: DefaultFilter | null= null;
   flipDiv = false;
-  onClick() {
+  flipDiv2 = false;
+
+  onClickflipDiv() {
     this.flipDiv = !this.flipDiv;
+  }
+
+  onClickflipDiv2() {
+    this.flipDiv2 = !this.flipDiv2;
   }
 }

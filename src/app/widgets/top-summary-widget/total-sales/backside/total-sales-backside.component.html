@@ -1,10 +1,7 @@
-<c-widget-stat-b [title]="'Toplam Satış Adedi'" class="mb-4 opaque text-inverse"
-  text="01 Ocak 2023'ten bu yana olan sonuçlar." value="3231 Adet">
-  <br />
-  <c-row>
-    <c-col xs="12" lg="6">
-    
-    </c-col>
-  </c-row>
-    
+<c-widget-stat-b [title]="'Toplam Satış Miktarı'" class="mb-4 gold text-inverse"
+text="" value="{{totalAmount | number :'1.0-0'}} Adet" >
+<br />
+<div class="chart-container" style="height:100%; width:100%" >
+  <canvas id="salesQuantityChart" width="150" height="100">{{ chart2 }}</canvas>
+</div>
 </c-widget-stat-b>

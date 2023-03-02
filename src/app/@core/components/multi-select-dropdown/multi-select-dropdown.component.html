@@ -1,0 +1,19 @@
+
+<div>
+    <div (mouseleave)="showDropDown = false">
+        <button class="drop-toggle btn flat" (click)="showDropDown=!showDropDown">
+            <span *ngIf="checkedList.length===0">Aralık Seçiniz</span>
+            <span *ngIf="checkedList.length>0">{{ checkedList.length > 3 ? checkedList.length + " ay seçildi" : selectedItemText.join(', ')}}</span>
+        </button>
+        <div class="drop-show" *ngIf="showDropDown">
+            <div style>
+                <input type="checkbox" [(ngModel)]="isAllSelected" (change)="selectAll()"> Tümünü seç
+            </div>
+            <label *ngFor="let a of list">
+                <input type="checkbox" [(ngModel)]="a.checked" 
+                    (change)="getSelectedValue(a)" />
+                <span>{{a.name}}</span>
+            </label>
+        </div>
+    </div>
+</div>
