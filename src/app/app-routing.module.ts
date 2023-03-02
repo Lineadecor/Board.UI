@@ -6,6 +6,11 @@ import { DefaultLayoutComponent } from './containers';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'yonetim/dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: DefaultLayoutComponent,
     data: {
       title: 'Home'
