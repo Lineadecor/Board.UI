@@ -1,41 +1,31 @@
 <c-card class="mb-4 card" style="--cui-card-cap-bg:#00aced; color: white;">
   <c-card-header class="card-header position-relative d-flex justify-content-center align-items-center pad-top-xs">
     <c-col class="card-body" style="padding: 0.2rem !important;">
-      <div class="d-flex justify-content-between">
-        <div class="float-start">
-          Yurtiçi
+      <div *ngFor="let saleData of salesSummaryData;">
+        <div class="d-flex justify-content-between">
+          <div class="float-start">
+            {{saleData.salesOrganization}}
+          </div>
+          <div class="float-end ms-1 text-nowrap">
+            <span style="font-size: x-small;">Bütçe: </span> {{saleData.total_Budget | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }} /
+            <span style="font-size: x-small;">Fiili: </span>: {{saleData.total_Realized  | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}
+          </div>
+
         </div>
-        <div class="float-end ms-1 text-nowrap">
-          <span style="font-size: x-small;">Bütçe: </span> {{'3553' | number: '1.0-0' }} / 
-          <span style="font-size: x-small;">Fiili: </span>: {{ '55' | number: '1.0-0'}}
-        </div>
-        
+        <c-progress class="my-2">
+          <c-progress-bar [value]="saleData.total_Percent" class="opaque progress-bar-percentage-l">{{saleData.total_Percent}}%</c-progress-bar>
+        </c-progress>
       </div>
-      <c-progress class="my-2">
-        <c-progress-bar [value]="2" class="opaque progress-bar-percentage-l">2%</c-progress-bar>
-      </c-progress>
-      <div class="d-flex justify-content-between">
-        <div class="float-start">
-          Yurtdışı
-        </div>
-        <div class="float-end ms-1 text-nowrap">
-          <span style="font-size: x-small;">Bütçe: </span> {{'12337' | number: '1.0-0' }} / 
-          <span style="font-size: x-small;">Fiili: </span>: {{ '804' | number: '1.0-0'}}
-        </div>
-      </div>
-      <c-progress class="my-2">
-        <c-progress-bar [value]="7" class="opaque progress-bar-percentage-l">7%</c-progress-bar>
-      </c-progress>
     </c-col>
   </c-card-header>
-  <c-card-body class="text-center card-body row budget-bottom-summary" >
+  <c-card-body class="text-center card-body row budget-bottom-summary">
     <c-col class="col ng-star-inserted">
-      <div class="fs-5 fw-semibold">15.890 Adet</div><!--Toplam Bütçe-->
+      <div class="fs-5 fw-semibold">{{totalBudgets | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}</div><!--Toplam Bütçe-->
       <div class="fs-5 fw-semibold">Bütçe</div>
     </c-col>
     <div class="vr ng-star-inserted"></div>
     <c-col class="col ng-star-inserted">
-      <div class="fs-5 fw-semibold">859 Adet</div><!--Toplam Fiili-->
+      <div class="fs-5 fw-semibold">{{totalRealized | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}</div><!--Toplam Fiili-->
       <div class="fs-5 fw-semibold">Fiili</div>
     </c-col>
   </c-card-body>

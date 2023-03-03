@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
 import { CompanyBudgetSummaryDto } from 'src/app/@core/data/dtos/company-budget-summary-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
-import { SalesService } from 'src/app/@core/services/sales.service';
 
 @Component({
   selector: 'app-total-sales-backside',
@@ -11,92 +10,88 @@ import { SalesService } from 'src/app/@core/services/sales.service';
   styleUrls: ['./total-sales-backside.component.scss']
 })
 export class TotalSalesBacksideComponent {
-  public chart2: any;
+  @Input() data: Array<CompanyBudgetSummaryDto> = new Array<CompanyBudgetSummaryDto>();
 
+  public chart2: any;
   public totalAmount = 0;
-  salesSummaryData = new Array<CompanyBudgetSummaryDto>();
+
+  private viewData = new Array<CompanyBudgetSummaryDto>()
+
   mainFilter = new DefaultFilter();
 
-
   constructor(private mainFilterService: MainFilterService,
-    private salesService: SalesService) {
-    
+    private cd: ChangeDetectorRef) {
+
     this.mainFilterService.mainFilter$.subscribe(data => {
       this.mainFilter = data;
-      this.getSalesSummaryData();
-      
+
     });
 
   }
 
   ngOnInit(): void {
-    
+    this.getChart(this.chart2);
   }
 
-  getSalesSummaryData() {
-    var respose = this.salesService.GetDashboardSummaryDataAsync(
-      this.mainFilter.year,
-      this.mainFilter.currency,
-      true);
-
-    respose.subscribe(data => {
-      if (data.isSuccess) {
-        this.salesSummaryData = data.results;
-
-        this.totalAmount = this.salesSummaryData.reduce((sum, current) => sum + current.total_Realized, 0);
-        this.getChart();
-      } else {
-        console.error("Data alınamadı");
-      }
-
-    });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["data"].currentValue !== undefined) {
+      this.viewData = changes["data"].currentValue;
+      this.totalAmount = this.viewData.reduce((sum, current) => sum + current.total_Realized, 0);
+      this.getChart(this.chart2);
+    }
 
   }
 
-  getChart() {
+  getChart(chart: Chart) {
 
-    const labelData = this.salesSummaryData.map(x=>x.salesOrganization);
-    const seriesData = this.salesSummaryData.map(x=> (x.total_Realized *100) / this.totalAmount);
-    const data = {
+    const labelData = this.viewData.map(x => x.salesOrganization);
+    const seriesData = this.viewData.map(x => (x.total_Realized * 100) / this.totalAmount);
+    const chartdata = {
       labels: labelData,
       datasets: [{
         label: 'Satış yüzdesi',
         data: seriesData,
         backgroundColor: [
-          'rgb(255, 91, 0)',
-          'rgb(212, 217, 37)'
+          'rgb(138, 196, 208)',
+          'rgb(244, 209, 96)'
         ],
         hoverOffset: 4
       }]
     };
 
-    this.chart2 = new Chart("salesQuantityChart", {
-      type: 'pie', //this denotes tha type of chart
+    if (chart === undefined || chart === null) {
+      this.chart2 = new Chart("salesQuantityChart", {
+        type: 'pie', //this denotes tha type of chart
 
-      data: data,
-      options: {
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: "right"
-          },
-          datalabels: {
-            color: 'black',
-            rotation: 0,
-            formatter: (value, ctx) => {
-              let sum = 0;
-              let dataArr = ctx.chart.data.datasets[0].data as Array<number>;
-              dataArr.map(data => {
-                sum = sum + data;
-              });
-              let percentage = (value * 100 / sum).toFixed(0) + "%";
-              return percentage;
+        data: chartdata,
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: "right"
+            },
+            datalabels: {
+              color: 'black',
+              rotation: 0,
+              formatter: (value, ctx) => {
+                let sum = 0;
+                let dataArr = ctx.chart.data.datasets[0].data as Array<number>;
+                dataArr.map(data => {
+                  sum = sum + data;
+                });
+                let percentage = (value * 100 / sum).toFixed(0) + "%";
+                return percentage;
+              }
             }
           }
         }
-      }
 
-    });
+      });
+    } else {
+      this.chart2.data= chartdata;
+      this.chart2.update("default");
+
+    }
   }
 }

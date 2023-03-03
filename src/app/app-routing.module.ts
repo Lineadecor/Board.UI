@@ -20,7 +20,11 @@ const routes: Routes = [
         path: 'yonetim',
         loadChildren: () => import('./pages/yonetim/yonetim.module').then(m => m.YonetimModule)
       },
-    ]
+      {
+        path: 'satis-kanali',
+        loadChildren: () => import('./pages/satis-kanali/satis-kanali.module').then(m => m.SatisKanaliModule)
+      },
+    ],
   }
 ];
 

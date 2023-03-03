@@ -43,9 +43,13 @@ import localeTr from '@angular/common/locales/tr';
 import { CookieService } from 'ngx-cookie-service';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { YonetimModule } from './pages/yonetim/yonetim.module';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
+//Custom Modules
+import { YonetimModule } from './pages/yonetim/yonetim.module';
+import { SatisKanaliModule } from './pages/satis-kanali/satis-kanali.module';
 import { MainFilterService } from './@core/services/filter-values.service';
 import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
 
@@ -97,8 +101,9 @@ const APP_CONTAINERS = [
     ListGroupModule,
     WidgetModule,
     CardModule,
+    FontAwesomeModule,
     YonetimModule,
-    FontAwesomeModule
+    SatisKanaliModule,
   ],
   providers: [
     IconSetService, 

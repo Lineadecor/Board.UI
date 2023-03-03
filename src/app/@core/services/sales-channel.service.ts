@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { ISalesChannelService } from '../abstraction/isales-channel-service';
 import { DashboardSalesChannelSummaryDataResponse } from '../data/responses/dashboard-sales-channel-summary-data-response.model';
 
