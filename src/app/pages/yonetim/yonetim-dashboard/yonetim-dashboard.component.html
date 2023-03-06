@@ -19,7 +19,7 @@
                 </th>
                 <th>Kanal</th>
                 <th>Bütçe Hedef</th>
-                <th class="text-center">İşlem</th>
+                <th class="text-center"></th>
               </tr>
             </thead>
             <tbody>
@@ -58,7 +58,10 @@
                   </c-progress>
                 </td>
                 <td>
-                  <div class="fw-semibold text-nowrap"></div>
+                  <div class="fw-semibold text-nowrap">
+                    <a [routerLink]="['/satis-kanali/sirket-butcesi']" [queryParams]="{id: channel.id}"  routerLinkActive="active" >
+                    <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+                  </a></div>
                 </td>
               </tr>
             </tbody>

@@ -1,0 +1,88 @@
+<c-row>
+    <c-col xs>
+        <c-card class="mb-4">
+            <c-card-header>Şirket Bütçesi</c-card-header>
+            <c-card-body>
+                <div>
+                   <table>
+                    <tr>
+                        <td class="text-center">
+                            <c-avatar
+                              size="md"
+                              src="./assets/img/avatars/{{channel.ownerPhoto}}"
+                            ></c-avatar>
+                          </td>
+                          <td>
+                            <div><h4>{{channel.description}}</h4></div>
+                            <div class="small text-medium-emphasis text-nowrap">
+                              <span>
+                                <h6>{{channel.owner}}</h6>
+                              </span>
+                            </div>
+                          </td>
+                    </tr>
+                   </table> 
+                    
+                </div>
+                <c-nav variant="tabs">
+                    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Aylık</a>
+                    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Kırılımlı</a>
+                </c-nav>
+                <c-tab-content #tabContent="cTabContent">
+                    <c-tab-pane class="p-3">
+                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable
+                            class="mb-0 border">
+                            <thead cTableColor="light">
+                                <tr>
+                                    <th class="text-center" style="width: 30%;">
+                                        Aylar
+                                    </th>
+                                    <th class="text-right" style="width: 10%;">Bütçe</th>
+                                    <th class="text-right" style="width: 10%;">Fiili</th>
+                                    <th style="width: 50%;">Yüzde</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of salesChannelMonthlyData; index as i">
+                                    <td>
+                                        {{months[data.month]}}
+                                    </td>
+                                    <td class="text-right">
+                                        {{ data.budget_Amount | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                                    </td>
+                                    <td class="text-right">
+                                        {{ data.realized_Amount | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="float-start">
+                                                <strong>{{ data.percent_Amount | number : '1.0-0'}}%</strong>
+                                            </div>
+                                        </div>
+                                        <c-progress thin>
+                                            <c-progress-bar [value]="data.percent_Amount"
+                                                color="success"></c-progress-bar>
+                                        </c-progress>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </c-tab-pane>
+                    <c-tab-pane class="p-3">
+                        <table [responsive]="true"  borderColor="dark" bordered cTable>
+                            <thead cTableColor="light">
+                                <tr>
+                                    <th colspan="3" style="width: 400px;"></th>
+                                    <th *ngFor="let month of months | slice:1;" colspan="2" class="text-center">
+                                        {{month}}</th>
+                                </tr>
+                            </thead>
+                            <tbody [innerHTML]="pivotTableData">
+                            </tbody>
+                        </table>
+                    </c-tab-pane>
+                </c-tab-content>
+            </c-card-body>
+        </c-card>
+    </c-col>
+</c-row>

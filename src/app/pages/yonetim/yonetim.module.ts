@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
 import { WidgetsModule } from 'src/app/widgets/widgets.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -23,6 +24,7 @@ import { WidgetsModule } from 'src/app/widgets/widgets.module';
     ProgressModule,
     ReactiveFormsModule,
     ButtonModule,
+    FontAwesomeModule,
     FormModule,
     ButtonModule,
     ButtonGroupModule,
