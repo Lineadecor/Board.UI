@@ -77,7 +77,7 @@ export class SirketButcesiComponent {
 
   getSalesChannelSummaryData() {
     var respose = this.salesChannelService.GetSalesChannelOwnersCompanyBudgetMonthlyAsync(
-      this.mainFilter.year, this.mainFilter.currency, this.channelId);
+      this.mainFilter.year, this.mainFilter.currency, this.channelId, this.isQuantity);
 
     respose.subscribe(data => {
       if (data.isSuccess) {

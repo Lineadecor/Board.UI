@@ -60,19 +60,19 @@
                                         {{months[data.month]}}
                                     </td>
                                     <td class="text-right">
-                                        {{ data.budget_Amount | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                                        {{ data.budget | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
                                     </td>
                                     <td class="text-right">
-                                        {{ data.realized_Amount | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                                        {{ data.realized | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-between">
                                             <div class="float-start">
-                                                <strong>{{ data.percent_Amount | number : '1.0-0'}}%</strong>
+                                                <strong>{{ data.percent | number : '1.0-0'}}%</strong>
                                             </div>
                                         </div>
                                         <c-progress thin>
-                                            <c-progress-bar [value]="data.percent_Amount"
+                                            <c-progress-bar [value]="data.percent"
                                                 color="success"></c-progress-bar>
                                         </c-progress>
                                     </td>

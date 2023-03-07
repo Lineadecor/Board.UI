@@ -50,11 +50,14 @@ export class SalesChannelService implements ISalesChannelService {
    return dataResponse;          
   }
 
-  public GetSalesChannelOwnersCompanyBudgetMonthlyAsync(year: number, currency: string, channelId: number): Observable<SalesChannelOwnersCompanyBudgetMonthlyResponse> {
+  public GetSalesChannelOwnersCompanyBudgetMonthlyAsync
+  (year: number, currency: string, channelId: number, isQuantity: boolean)
+  : Observable<SalesChannelOwnersCompanyBudgetMonthlyResponse> {
     const body = new HttpParams()
     .set('Year', year)
     .set('Currency', currency)
-    .set('SalesChannelId',  channelId);
+    .set('SalesChannelId',  channelId)
+    .set('IsQuantity',  isQuantity);
 
     var dataResponse =  this.httpClient
           .post<SalesChannelOwnersCompanyBudgetMonthlyResponse>(`${environment.apiUrl}/${this.endpoint}/getmonthlybyowner`, body.toString(), 
