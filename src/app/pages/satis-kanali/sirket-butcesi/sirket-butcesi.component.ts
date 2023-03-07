@@ -9,7 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router';
 import { SalesChannelDto } from 'src/app/@core/data/dtos/sales-channel-dto.model';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-sirket-butcesi',
@@ -258,4 +258,21 @@ export class SirketButcesiComponent {
     return this.sanitizer.bypassSecurityTrustHtml(tableString);
   }
 
+
+  exportToExcel(tableName: string): void
+  {
+
+    let fileName= `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.xlsx`;
+    /* pass here the table id */
+    let element = document.getElementById(tableName);
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+ 
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+ 
+    /* save to file */  
+    XLSX.writeFile(wb, fileName);
+ 
+  }
 }
