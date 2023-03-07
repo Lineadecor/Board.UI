@@ -81,7 +81,18 @@
                         </table>
                     </c-tab-pane>
                     <c-tab-pane class="p-3">
-                       
+                       <div style="display: block; padding: 0.5rem;">
+                        Dışa aktar: 
+                        <button class="export-button " cButton color="primary" variant="outline" cTooltip="Excel'e aktar">
+                            <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
+                        </button>
+                        <button class="export-button " cButton color="primary" variant="outline" cTooltip="Pdf'e aktar" >
+                            <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
+                        </button>
+                        <button class="export-button " cButton color="primary" variant="outline" cTooltip="Yazdır" >
+                            <fa-icon [icon]="['fas', 'print']"></fa-icon>
+                        </button>
+                       </div>
                         <table [responsive]="true"  borderColor="dark" bordered cTable>
                             <thead cTableColor="light">
                                 <tr>

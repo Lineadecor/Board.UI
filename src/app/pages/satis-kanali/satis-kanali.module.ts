@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { SatisKanaliRoutingModule } from './satis-kanali-routing.module';
-import { AvatarModule, ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, NavModule, ProgressModule, TableModule, TabsModule } from '@coreui/angular';
+import { AvatarModule, ButtonGroupModule, ButtonModule, CardModule, DropdownModule, FormModule, GridModule, NavModule, ProgressModule, TableModule, TabsModule, TooltipModule } from '@coreui/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
@@ -27,6 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule,
     FormModule,
     ButtonModule,
+    TooltipModule,
     ButtonGroupModule,
     AvatarModule,
     TableModule,
