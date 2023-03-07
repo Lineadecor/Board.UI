@@ -4,109 +4,128 @@
             <c-card-header>Şirket Bütçesi</c-card-header>
             <c-card-body>
                 <div>
-                   <table>
-                    <tr>
-                        <td class="text-center">
-                            <c-avatar
-                              size="md"
-                              src="./assets/img/avatars/{{channel.ownerPhoto}}"
-                            ></c-avatar>
-                          </td>
-                          <td>
-                            <div><h4>{{channel.description}}</h4></div>
-                            <div class="small text-medium-emphasis text-nowrap">
-                              <span>
-                                <h6>{{channel.owner}}</h6>
-                              </span>
-                            </div>
-                          </td>
-                    </tr>
-                   </table> 
-                    
+                    <table>
+                        <tr>
+                            <td class="text-center">
+                                <c-avatar size="md" src="./assets/img/avatars/{{channel.ownerPhoto}}"></c-avatar>
+                            </td>
+                            <td>
+                                <div>
+                                    <h4>{{channel.description}}</h4>
+                                </div>
+                                <div class="small text-medium-emphasis text-nowrap">
+                                    <span>
+                                        <h6>{{channel.owner}}</h6>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
-                
+
                 <c-nav variant="tabs">
                     <c-nav-item>
-                    <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Aylık</a>
-                </c-nav-item>
-                <c-nav-item>
-                    <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Kırılımlı</a>
-                </c-nav-item>
-                <c-dropdown variant="nav-item">
-                    <a [routerLink] cDropdownToggle cNavLink>Görüntüleme Şekli : {{isQuantity ? "Miktar": "Tutar"}}</a>
-                    <ul cDropdownMenu>
-                      <li><a [routerLink] cDropdownItem (click)=" refreshData(false)">Tutar</a></li>
-                      <li><a [routerLink] cDropdownItem (click)=" refreshData(true)">Miktar</a></li>
-                    </ul>
-                  </c-dropdown>
+                        <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Aylık</a>
+                    </c-nav-item>
+                    <c-nav-item>
+                        <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Kırılımlı</a>
+                    </c-nav-item>
+                    <c-dropdown variant="nav-item">
+                        <a [routerLink] cDropdownToggle cNavLink>Görüntüleme Şekli : {{isQuantity ? "Miktar":
+                            "Tutar"}}</a>
+                        <ul cDropdownMenu>
+                            <li><a [routerLink] cDropdownItem (click)=" refreshData(false)">Tutar</a></li>
+                            <li><a [routerLink] cDropdownItem (click)=" refreshData(true)">Miktar</a></li>
+                        </ul>
+                    </c-dropdown>
                 </c-nav>
                 <c-tab-content #tabContent="cTabContent">
                     <c-tab-pane class="p-3">
-                        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable
-                            class="mb-0 border">
-                            <thead cTableColor="light">
-                                <tr>
-                                    <th class="text-center" style="width: 30%;">
-                                        Aylar
-                                    </th>
-                                    <th class="text-right" style="width: 10%;">Bütçe</th>
-                                    <th class="text-right" style="width: 10%;">Fiili</th>
-                                    <th style="width: 50%;">Yüzde</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let data of salesChannelMonthlyData; index as i">
-                                    <td>
-                                        {{months[data.month]}}
-                                    </td>
-                                    <td class="text-right">
-                                        {{ data.budget | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
-                                    </td>
-                                    <td class="text-right">
-                                        {{ data.realized | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
-                                    </td>
-                                    <td>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="float-start">
-                                                <strong>{{ data.percent | number : '1.0-0'}}%</strong>
+                        <div style="display: block; padding: 0.5rem;">
+                            Dışa aktar:
+                            <button class="export-button" (click)="exportToExcel('AylikSirketButcesi')" cButton
+                                color="primary" variant="outline" cTooltip="Excel'e aktar">
+                                <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
+                            </button>
+                            <button class="export-button" (click)="exportToPdf('AylikSirketButcesi')" cButton
+                                color="primary" variant="outline" cTooltip="Pdf'e aktar">
+                                <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
+                            </button>
+                            <button class="export-button " (click)="printDiv('dvAylik')" cButton color="primary"
+                                variant="outline" cTooltip="Yazdır">
+                                <fa-icon [icon]="['fas', 'print']"></fa-icon>
+                            </button>
+                        </div>
+                        <div id="dvAylik">
+                            <table id="AylikSirketButcesi" [hover]="true" [responsive]="true" [striped]="true"
+                                align="middle" cTable class="mb-0 border">
+                                <thead cTableColor="light">
+                                    <tr>
+                                        <th class="text-center" style="width: 30%;">
+                                            Aylar
+                                        </th>
+                                        <th class="text-right" style="width: 10%;">Bütçe</th>
+                                        <th class="text-right" style="width: 10%;">Fiili</th>
+                                        <th style="width: 50%;">Yüzde</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of salesChannelMonthlyData; index as i">
+                                        <td>
+                                            {{months[data.month]}}
+                                        </td>
+                                        <td class="text-right">
+                                            {{ data.budget | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
+                                        </td>
+                                        <td class="text-right">
+                                            {{ data.realized | currency: mainFilter.currency:'symbol':'1.0-0':'tr' }}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="float-start">
+                                                    <strong>{{ data.percent | number : '1.0-0'}}%</strong>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <c-progress thin>
-                                            <c-progress-bar [value]="data.percent"
-                                                color="success"></c-progress-bar>
-                                        </c-progress>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            <c-progress thin>
+                                                <c-progress-bar [value]="data.percent" color="success"></c-progress-bar>
+                                            </c-progress>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </c-tab-pane>
                     <c-tab-pane class="p-3">
-                       <div style="display: block; padding: 0.5rem;">
-                        Dışa aktar: 
-                        <button class="export-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton color="primary" variant="outline" cTooltip="Excel'e aktar">
-                            <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
-                        </button>
-                        <button class="export-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton color="primary" variant="outline" cTooltip="Pdf'e aktar" >
-                            <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
-                        </button>
-                        <button class="export-button " (click)="printDiv('dvKirilimli')" cButton color="primary" variant="outline" cTooltip="Yazdır" >
-                            <fa-icon [icon]="['fas', 'print']"></fa-icon>
-                        </button>
-                       </div>
-                       <div id="dvKirilimli">
-                        <table id="KirilimliSirketButcesi" [responsive]="true"  borderColor="dark" bordered cTable
-                        style="width: max-content;">
-                            <thead cTableColor="light">
-                                <tr>
-                                    <th colspan="3" style="width: 400px;"></th>
-                                    <th *ngFor="let month of months | slice:1;" colspan="2" class="text-center">
-                                        {{month}}</th>
-                                </tr>
-                            </thead>
-                            <tbody [innerHTML]="pivotTableData">
-                            </tbody>
-                        </table>
-                    </div>
+                        <div style="display: block; padding: 0.5rem;">
+                            Dışa aktar:
+                            <button class="export-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton
+                                color="primary" variant="outline" cTooltip="Excel'e aktar">
+                                <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
+                            </button>
+                            <button class="export-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton
+                                color="primary" variant="outline" cTooltip="Pdf'e aktar">
+                                <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
+                            </button>
+                            <button class="export-button " (click)="printDiv('dvKirilimli')" cButton color="primary"
+                                variant="outline" cTooltip="Yazdır">
+                                <fa-icon [icon]="['fas', 'print']"></fa-icon>
+                            </button>
+                        </div>
+                        <div id="dvKirilimli">
+                            <table id="KirilimliSirketButcesi" [responsive]="true" borderColor="dark" bordered cTable
+                                style="width: max-content;">
+                                <thead cTableColor="light">
+                                    <tr>
+                                        <th colspan="3" style="width: 400px;"></th>
+                                        <th *ngFor="let month of months | slice:1;" colspan="2" class="text-center">
+                                            {{month}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody [innerHTML]="pivotTableData">
+                                </tbody>
+                            </table>
+                        </div>
                     </c-tab-pane>
                 </c-tab-content>
             </c-card-body>
