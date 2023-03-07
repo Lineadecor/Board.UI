@@ -8,3 +8,26 @@ td {
 .export-button {
     margin-right: 0.2rem;
 }
+
+$export-button-width:32px;
+$export-button-height:32px;
+.pdf-button {
+    width: $export-button-width;
+    height: $export-button-height;
+    background-image: url("/assets/img/icons/pdf.png");
+    background-size: cover;
+}
+
+.xlsx-button {
+    width: $export-button-width;
+    height: $export-button-height;
+    background-image: url("/assets/img/icons/xlsx.png");
+    background-size: cover;
+}
+
+.print-button {
+    width: $export-button-width;
+    height: $export-button-height;
+    background-image: url("/assets/img/icons/print.png");
+    background-size: cover;
+}
