@@ -9,8 +9,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router';
 import { SalesChannelDto } from 'src/app/@core/data/dtos/sales-channel-dto.model';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-
-
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-sirket-butcesi',
   templateUrl: './sirket-butcesi.component.html',
@@ -22,7 +24,7 @@ export class SirketButcesiComponent {
 
   channelId: number;
   channel: SalesChannelDto;
-
+ 
   public isQuantity: boolean = false;
   public mainFilter: DefaultFilter = new DefaultFilter();
   public pivotTableData: SafeHtml;
@@ -49,6 +51,11 @@ export class SirketButcesiComponent {
 
 
   ngOnInit(): void {
+    this.refreshData(false);
+  }
+
+  public refreshData(param: boolean) {
+    this.isQuantity = param;
     this.getSalesChannelSummaryData();
     this.getSalesChannelDetailedData();
     this.getSalesChannel(this.channelId);
@@ -72,7 +79,7 @@ export class SirketButcesiComponent {
 
   getSalesChannelSummaryData() {
     var respose = this.salesChannelService.GetSalesChannelOwnersCompanyBudgetMonthlyAsync(
-      this.mainFilter.year, this.mainFilter.currency, this.channelId);
+      this.mainFilter.year, this.mainFilter.currency, this.channelId, this.isQuantity);
 
     respose.subscribe(data => {
       if (data.isSuccess) {
@@ -253,4 +260,67 @@ export class SirketButcesiComponent {
     return this.sanitizer.bypassSecurityTrustHtml(tableString);
   }
 
+
+  exportToExcel(tableName: string): void
+  {
+
+    let fileName= `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.xlsx`;
+    /* pass here the table id */
+    let element = document.getElementById(tableName);
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+ 
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+ 
+    /* save to file */  
+    XLSX.writeFile(wb, fileName);
+ 
+  }
+
+  exportToPdf(tableName: string): void
+  {
+    let fileName= `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.pdf`;
+    /*const doc = new jsPDF('landscape');
+    doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
+    doc.setFont("Amiri");
+    autoTable(doc, { html: `#${tableName}`})
+    doc.save(fileName);*/
+
+    let DATA: any = document.getElementById(tableName);
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 280;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('l', 'mm', 'a4');
+      let position = 10;
+      PDF.addImage(FILEURI, 'PNG', 10, position, fileWidth, fileHeight);
+      PDF.save(fileName);
+    });
+  }
+
+   printDiv(divId: string) {
+    const css = `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">`;
+    const printContents = document.getElementById(divId)?.innerHTML;
+    const pageContent = `<!DOCTYPE html><html><head>${css}</head><body onload="window.print()">${printContents}</html>`;
+    let popupWindow: Window | null;
+    if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+      popupWindow = window.open(
+        '',
+        '_blank',
+        'width=1000,height=900,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no'
+      );
+      popupWindow?.window.focus();
+      popupWindow?.document.write(pageContent);
+      popupWindow?.document.close();
+      
+    } else {
+      popupWindow = window.open('', '_blank', 'width=1000,height=900');
+      popupWindow?.document.open();
+      popupWindow?.document.write(pageContent);
+      popupWindow?.document.close();
+    }
+    
+  }
 }
