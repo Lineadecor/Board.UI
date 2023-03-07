@@ -86,14 +86,16 @@
                         <button class="export-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton color="primary" variant="outline" cTooltip="Excel'e aktar">
                             <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
                         </button>
-                        <button class="export-button " cButton color="primary" variant="outline" cTooltip="Pdf'e aktar" >
+                        <button class="export-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton color="primary" variant="outline" cTooltip="Pdf'e aktar" >
                             <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
                         </button>
-                        <button class="export-button " cButton color="primary" variant="outline" cTooltip="Yazdır" >
+                        <button class="export-button " (click)="printDiv('dvKirilimli')" cButton color="primary" variant="outline" cTooltip="Yazdır" >
                             <fa-icon [icon]="['fas', 'print']"></fa-icon>
                         </button>
                        </div>
-                        <table id="KirilimliSirketButcesi" [responsive]="true"  borderColor="dark" bordered cTable>
+                       <div id="dvKirilimli">
+                        <table id="KirilimliSirketButcesi" [responsive]="true"  borderColor="dark" bordered cTable
+                        style="width: max-content;">
                             <thead cTableColor="light">
                                 <tr>
                                     <th colspan="3" style="width: 400px;"></th>
@@ -104,6 +106,7 @@
                             <tbody [innerHTML]="pivotTableData">
                             </tbody>
                         </table>
+                    </div>
                     </c-tab-pane>
                 </c-tab-content>
             </c-card-body>
