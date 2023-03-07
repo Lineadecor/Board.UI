@@ -49,6 +49,11 @@ export class SirketButcesiComponent {
 
 
   ngOnInit(): void {
+    this.refreshData(false);
+  }
+
+  public refreshData(param: boolean) {
+    this.isQuantity = param;
     this.getSalesChannelSummaryData();
     this.getSalesChannelDetailedData();
     this.getSalesChannel(this.channelId);

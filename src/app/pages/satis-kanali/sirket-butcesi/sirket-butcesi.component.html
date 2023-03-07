@@ -24,9 +24,21 @@
                    </table> 
                     
                 </div>
+                
                 <c-nav variant="tabs">
+                    <c-nav-item>
                     <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Aylık</a>
+                </c-nav-item>
+                <c-nav-item>
                     <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Kırılımlı</a>
+                </c-nav-item>
+                <c-dropdown variant="nav-item">
+                    <a [routerLink] cDropdownToggle cNavLink>Görüntüleme Şekli : {{isQuantity ? "Miktar": "Tutar"}}</a>
+                    <ul cDropdownMenu>
+                      <li><a [routerLink] cDropdownItem (click)=" refreshData(false)">Tutar</a></li>
+                      <li><a [routerLink] cDropdownItem (click)=" refreshData(true)">Miktar</a></li>
+                    </ul>
+                  </c-dropdown>
                 </c-nav>
                 <c-tab-content #tabContent="cTabContent">
                     <c-tab-pane class="p-3">
@@ -69,6 +81,7 @@
                         </table>
                     </c-tab-pane>
                     <c-tab-pane class="p-3">
+                       
                         <table [responsive]="true"  borderColor="dark" bordered cTable>
                             <thead cTableColor="light">
                                 <tr>
