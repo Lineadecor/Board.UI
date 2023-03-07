@@ -144,7 +144,7 @@ export class SirketButcesiComponent {
         let distPartData = partData.filter(x => x.distributeChannel === distChannel);
         let distPartText: string = (distChannel?.startsWith(" | ") ? distChannel?.replace(" | ", "") : distChannel) as string;
 
-        distPartText = distPartText?.replaceAll(" | ", "<br/>|");
+        distPartText = distPartText?.replaceAll(" | ", "<br/>");
         if (distPartData.length > 1) {
           tableString += `<td rowspan="${distPartData.length}">${distPartText}</td>`;
         } else {
@@ -153,7 +153,7 @@ export class SirketButcesiComponent {
 
         distPartData.forEach(value => {
           let partText = (value.part?.startsWith(" | ") ? value.part?.replace(" | ", "") : value.part) as string;
-          partText = partText?.replaceAll(" | ", "<br/>|");
+          partText = partText?.replaceAll(" | ", "<br/>");
 
           tableString += `<td>${partText}</td>`;
           if (this.isQuantity) {
@@ -303,7 +303,7 @@ export class SirketButcesiComponent {
     const css = `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">`;
     const printContents = document.getElementById(divId)?.innerHTML;
-    const pageContent = `<!DOCTYPE html><html><head>${css}</head><body onload="window.print()">${printContents}</html>`;
+    const pageContent = `<!DOCTYPE html><html><head>${css}<style>table { width: max-content !important;}</style></head><body onload="window.print()">${printContents}</html>`;
     let popupWindow: Window | null;
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
       popupWindow = window.open(

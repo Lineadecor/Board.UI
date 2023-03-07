@@ -44,17 +44,15 @@
                     <c-tab-pane class="p-3">
                         <div style="display: block; padding: 0.5rem;">
                             Dışa aktar:
-                            <button class="export-button" (click)="exportToExcel('AylikSirketButcesi')" cButton
-                                color="primary" variant="outline" cTooltip="Excel'e aktar">
-                                <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
+                            <button class="export-button xlsx-button" (click)="exportToExcel('AylikSirketButcesi')" cButton
+                                color="light" variant="outline" cTooltip="Excel'e aktar">
                             </button>
-                            <button class="export-button" (click)="exportToPdf('AylikSirketButcesi')" cButton
-                                color="primary" variant="outline" cTooltip="Pdf'e aktar">
-                                <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
+                            <button class="export-button pdf-button" (click)="exportToPdf('AylikSirketButcesi')" cButton
+                                color="light" variant="outline" cTooltip="Pdf'e aktar">
                             </button>
-                            <button class="export-button " (click)="printDiv('dvAylik')" cButton color="primary"
+                            <button class="export-button print-button" (click)="printDiv('dvAylik')" cButton color="light"
                                 variant="outline" cTooltip="Yazdır">
-                                <fa-icon [icon]="['fas', 'print']"></fa-icon>
+
                             </button>
                         </div>
                         <div id="dvAylik">
@@ -99,21 +97,19 @@
                     <c-tab-pane class="p-3">
                         <div style="display: block; padding: 0.5rem;">
                             Dışa aktar:
-                            <button class="export-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton
-                                color="primary" variant="outline" cTooltip="Excel'e aktar">
-                                <fa-icon [icon]="['far', 'file-excel']"></fa-icon>
+                            <button class="export-button xlsx-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton
+                                color="light" variant="outline" cTooltip="Excel'e aktar">
+
                             </button>
-                            <button class="export-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton
-                                color="primary" variant="outline" cTooltip="Pdf'e aktar">
-                                <fa-icon [icon]="['far', 'file-pdf']"></fa-icon>
+                            <button class="export-button pdf-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton
+                                color="light" variant="outline" cTooltip="Pdf'e aktar">
                             </button>
-                            <button class="export-button " (click)="printDiv('dvKirilimli')" cButton color="primary"
+                            <button class="export-button print-button" (click)="printDiv('dvKirilimli')" cButton color="light"
                                 variant="outline" cTooltip="Yazdır">
-                                <fa-icon [icon]="['fas', 'print']"></fa-icon>
                             </button>
                         </div>
                         <div id="dvKirilimli">
-                            <table id="KirilimliSirketButcesi" [responsive]="true" borderColor="dark" bordered cTable
+                            <table id="KirilimliSirketButcesi" [responsive]="true" bordered cTable
                                 style="width: max-content;">
                                 <thead cTableColor="light">
                                     <tr>
