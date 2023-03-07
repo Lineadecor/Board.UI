@@ -1,5 +1,5 @@
 export interface SalesChannelDashboardSummaryDto {
-    iD: number;
+    id: number;
     picture: string;
     owner: string;
     channelName: string;

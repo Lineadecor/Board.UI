@@ -3,46 +3,45 @@ import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { DropdownListItem } from 'src/app/@core/data/models/dropdown-list-item';
 import { DefaultFilter } from "src/app/@core/data/models/main-filter";
 import { MainFilterService } from "src/app/@core/services/filter-values.service";
+import { GlobalVariables } from "src/global";
+
 
 @Component({
   selector: 'app-default-header',
   templateUrl: './default-header.component.html',
 })
 export class DefaultHeaderComponent extends HeaderComponent {
-
   @Input() sidebarId: string = "sidebar";
 
   mainFilter: DefaultFilter = new DefaultFilter();
-
   years = new Array<number>();
   currencies = new Array<string>();
-
   list = new Array<DropdownListItem>();
   checkedList = new Array<DropdownListItem>();
-
-  months = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+  
   constructor(private classToggler: ClassToggleService,
-    private mainFilterService: MainFilterService) {
+    private mainFilterService: MainFilterService,
+    private global: GlobalVariables) {
     super();
     this.setFilterVariables();
     this.mainFilterService.mainFilter$.subscribe(filterValues => this.mainFilter = filterValues);
 
-    for (let index = 1; index < this.months.length; index++) {
+    for (let index = 1; index < this.global.months.length; index++) {
 
       if (this.mainFilter.listMonths === undefined || this.mainFilter.listMonths?.length === 0) {
         if (index === new Date().getMonth()) {
-          this.list.push({ checked: true, name: this.months[index], value: index })
-          this.checkedList.push({ checked: true, name: this.months[index], value: index });
+          this.list.push({ checked: true, name: this.global.months[index], value: index })
+          this.checkedList.push({ checked: true, name: this.global.months[index], value: index });
         } else {
-          this.list.push({ checked: false, name: this.months[index], value: index });
+          this.list.push({ checked: false, name: this.global.months[index], value: index });
         }
       } else {
         if (this.mainFilter.listMonths.indexOf(index) >= 0) {
-          this.list.push({ checked: true, name: this.months[index], value: index })
-          this.checkedList.push({ checked: true, name: this.months[index], value: index });
+          this.list.push({ checked: true, name: this.global.months[index], value: index })
+          this.checkedList.push({ checked: true, name: this.global.months[index], value: index });
 
         } else {
-          this.list.push({ checked: false, name: this.months[index], value: index });
+          this.list.push({ checked: false, name: this.global.months[index], value: index });
         }
 
       }

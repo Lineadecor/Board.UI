@@ -52,6 +52,7 @@ import { YonetimModule } from './pages/yonetim/yonetim.module';
 import { SatisKanaliModule } from './pages/satis-kanali/satis-kanali.module';
 import { MainFilterService } from './@core/services/filter-values.service';
 import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
+import { GlobalVariables } from 'src/global';
 
 
 
@@ -110,7 +111,8 @@ const APP_CONTAINERS = [
     CookieService,
     MainFilterService,
     { provide: LOCALE_ID, useValue: 'tr' },
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: GlobalVariables}
   ],
   bootstrap: [AppComponent]
 })

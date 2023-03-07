@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
 import { SirketButcesiComponent } from './sirket-butcesi/sirket-butcesi.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SirketButcesiComponent } from './sirket-butcesi/sirket-butcesi.componen
     ProgressModule,
     ReactiveFormsModule,
     ButtonModule,
+    FontAwesomeModule,
     FormModule,
     ButtonModule,
     ButtonGroupModule,

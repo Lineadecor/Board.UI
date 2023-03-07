@@ -46,9 +46,4 @@ export class YonetimDashboardComponent  implements OnInit {
 
   }
 
- 
-
-  
-
-
 }
