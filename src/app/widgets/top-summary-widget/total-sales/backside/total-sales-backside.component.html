@@ -1,7 +1,14 @@
-<c-widget-stat-b [title]="'Toplam Satış Miktarı'" class="mb-4 gold text-inverse"
-text="" value="{{totalAmount | number :'1.0-0'}} Adet" >
-<br />
-<div class="chart-container" style="height:100%; width:100%" >
-  <canvas id="salesQuantityChart" width="150" height="100">{{ chart2 }}</canvas>
-</div>
-</c-widget-stat-b>
+<c-card>
+  <c-card-body>
+    <c-container>
+      <c-row>
+        <c-col><h4 cCardTitle>{{totalAmount | number :'1.0-0'}} Adet</h4></c-col>
+        <c-col class="text-end">Toplam Satış Miktarı</c-col>
+      </c-row>
+    </c-container>
+    
+      <div cCardText class="chart-container" style="height:100%; width:100%" >
+        <canvas id="salesQuantityChart" width="150" height="155px">{{ chart2 }}</canvas>
+      </div>
+  </c-card-body>
+</c-card>

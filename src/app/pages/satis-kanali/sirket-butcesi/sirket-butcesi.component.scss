@@ -9,6 +9,14 @@ td {
     margin-right: 0.2rem;
 }
 
+.td-bg-blue {
+    background-color: aliceblue;
+}
+
+.td-bg-white {
+    background-color: white;
+}
+
 $export-button-width:32px;
 $export-button-height:32px;
 .pdf-button {
@@ -30,4 +38,50 @@ $export-button-height:32px;
     height: $export-button-height;
     background-image: url("/assets/img/icons/print.png");
     background-size: cover;
+}
+
+.card-options {
+    width:86%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .card-options {
+        width:58%;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .card-options {
+        width:58%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .card-options {
+        width:62%;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .card-options {
+        width:75%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .card-options {
+        width:80%;
+    }
+}
+
+/* Wide screens */
+@media only screen and (min-width: 1400px) {
+    .card-options {
+        width:85%;
+    }
 }

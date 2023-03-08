@@ -11,8 +11,12 @@ import { SalesChannelDto } from 'src/app/@core/data/dtos/sales-channel-dto.model
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
 import html2canvas from 'html2canvas';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+
 @Component({
   selector: 'app-sirket-butcesi',
   templateUrl: './sirket-butcesi.component.html',
@@ -24,8 +28,12 @@ export class SirketButcesiComponent {
 
   channelId: number;
   channel: SalesChannelDto;
- 
   public isQuantity: boolean = false;
+  public viewTypeRdGrp = new UntypedFormGroup({
+    viewTypeGrp: new UntypedFormControl('Tutar')
+  });
+
+
   public mainFilter: DefaultFilter = new DefaultFilter();
   public pivotTableData: SafeHtml;
   constructor(
@@ -35,7 +43,10 @@ export class SirketButcesiComponent {
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     private currencyPipe: CurrencyPipe,
-    private numberPipe: DecimalPipe,) {
+    private numberPipe: DecimalPipe,
+    private library: FaIconLibrary,
+  ) {
+    this.library.addIconPacks(fas, far);
     this.mainFilterService.mainFilter$.subscribe(data => {
       this.mainFilter = data;
     });
@@ -47,7 +58,7 @@ export class SirketButcesiComponent {
 
   salesChannelDetailedData = new Array<BudgetSalesChannelByOwnerDetailDto>();
   months = this.global.months;
-
+  selectedTableName: string = 'AylikSirketButcesi';
 
 
   ngOnInit(): void {
@@ -56,6 +67,7 @@ export class SirketButcesiComponent {
 
   public refreshData(param: boolean) {
     this.isQuantity = param;
+    this.viewTypeRdGrp.setValue({ viewTypeGrp: param ? "Miktar" : "Tutar" });
     this.getSalesChannelSummaryData();
     this.getSalesChannelDetailedData();
     this.getSalesChannel(this.channelId);
@@ -116,21 +128,24 @@ export class SirketButcesiComponent {
     var tableString = "";
     tableString += "<tr>";
     tableString += "<td colspan=\"3\"></td>";
-    for (let index = 1; index < this.months.length; index++) {
+    for (let index = 1; index <= this.months.length; index++) {
       tableString += "<td><b>Bütçe</b></td><td><b>Fiili</b></td>";
     }
     tableString += "</tr>";
-
-
-
+    let bgColor = "td-bg-white";
     let orderTypes = [... new Set(data.map(x => x.orderType))];
     orderTypes.forEach(orderType => {
-      tableString += "<tr>";
+      if (bgColor === "td-bg-white") {
+        bgColor = "td-bg-blue";
+      } else {
+        bgColor = "td-bg-white";
+      }
+      tableString += `<tr class=\"${bgColor}\">`;
       let partData = data.filter(x => x.orderType === orderType);
       var orderTypeText = (orderType?.startsWith(" | ") ? orderType?.replace(" | ", "") : orderType) as string;
       orderTypeText = orderTypeText?.replaceAll(" | ", "<br/>");
-      if (partData.length > 1) {
 
+      if (partData.length > 1) {
         tableString += `<td rowspan="${partData.length}">${orderTypeText}</td>`;
       } else {
         tableString += `<td>${orderTypeText}</td>`;
@@ -139,7 +154,7 @@ export class SirketButcesiComponent {
       let distChannels = [... new Set(partData.map(x => x.distributeChannel))];
       distChannels.forEach(distChannel => {
         if (tableString.endsWith("</tr>")) {
-          tableString += "<tr>";
+          tableString += `<tr class=\"${bgColor}\">`;
         }
         let distPartData = partData.filter(x => x.distributeChannel === distChannel);
         let distPartText: string = (distChannel?.startsWith(" | ") ? distChannel?.replace(" | ", "") : distChannel) as string;
@@ -154,35 +169,36 @@ export class SirketButcesiComponent {
         distPartData.forEach(value => {
           let partText = (value.part?.startsWith(" | ") ? value.part?.replace(" | ", "") : value.part) as string;
           partText = partText?.replaceAll(" | ", "<br/>");
-
+          
           tableString += `<td>${partText}</td>`;
           if (this.isQuantity) {
-            tableString += `<td class="text-right">${value.ocakBudget}</td>`;
-            tableString += `<td class="text-right">${value.ocakReal}</td>`;
-            tableString += `<td class="text-right">${value.subatBudget}</td>`;
-            tableString += `<td class="text-right">${value.subatReal}</td>`;
-            tableString += `<td class="text-right">${value.martBudget}</td>`;
-            tableString += `<td class="text-right">${value.martReal}</td>`;
-            tableString += `<td class="text-right">${value.nisanBudget}</td>`;
-            tableString += `<td class="text-right">${value.nisanReal}</td>`;
-            tableString += `<td class="text-right">${value.mayisBudget}</td>`;
-            tableString += `<td class="text-right">${value.mayisReal}</td>`;
-            tableString += `<td class="text-right">${value.haziranBudget}</td>`;
-            tableString += `<td class="text-right">${value.haziranReal}</td>`;
-            tableString += `<td class="text-right">${value.temmuzBudget}</td>`;
-            tableString += `<td class="text-right">${value.temmuzReal}</td>`;
-            tableString += `<td class="text-right">${value.agustosBudget}</td>`;
-            tableString += `<td class="text-right">${value.agustosReal}</td>`;
-            tableString += `<td class="text-right">${value.eylulBudget}</td>`;
-            tableString += `<td class="text-right">${value.eylulReal}</td>`;
-            tableString += `<td class="text-right">${value.ekimBudget}</td>`;
-            tableString += `<td class="text-right">${value.ekimReal}</td>`;
-            tableString += `<td class="text-right">${value.kasimBudget}</td>`;
-            tableString += `<td class="text-right">${value.kasimReal}</td>`;
-            tableString += `<td class="text-right">${value.aralikBudget}</td>`;
-            tableString += `<td class="text-right">${value.aralikReal}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.ocakBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.ocakReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.subatBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.subatReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.martBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.martReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.nisanBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.nisanReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.mayisBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.mayisReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.haziranBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.haziranReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.temmuzBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.temmuzReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.agustosBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.agustosReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.eylulBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.eylulReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.ekimBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.ekimReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.kasimBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.kasimReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.aralikBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.aralikReal, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.totalBudget, '1.0-0')}</td>`;
+            tableString += `<td class="text-right">${this.numberPipe.transform(value.totalReal, '1.0-0')}</td>`;
           } else {
-
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.ocakBudget, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.ocakReal, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.subatBudget, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
@@ -207,9 +223,12 @@ export class SirketButcesiComponent {
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.kasimReal, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.aralikBudget, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
             tableString += `<td class="text-right">${this.currencyPipe.transform(value.aralikReal, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
+            tableString += `<td class="text-right">${this.currencyPipe.transform(value.totalBudget, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
+            tableString += `<td class="text-right">${this.currencyPipe.transform(value.totalReal, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')}</td>`;
           }
 
           tableString += "</tr>";
+          tableString += `<tr class=\"${bgColor}\">`;
         });
 
 
@@ -240,7 +259,9 @@ export class SirketButcesiComponent {
       data.map(x => x.kasimBudget).reduce((a, b) => { return a + b; }),
       data.map(x => x.kasimReal).reduce((a, b) => { return a + b; }),
       data.map(x => x.aralikBudget).reduce((a, b) => { return a + b; }),
-      data.map(x => x.aralikReal).reduce((a, b) => { return a + b; })];
+      data.map(x => x.aralikReal).reduce((a, b) => { return a + b; }),
+      data.map(x => x.totalBudget).reduce((a, b) => { return a + b; }),
+      data.map(x => x.totalReal).reduce((a, b) => { return a + b; })];
 
 
     tableString += "<tr style=\"background-color:gainsboro\">";
@@ -261,26 +282,24 @@ export class SirketButcesiComponent {
   }
 
 
-  exportToExcel(tableName: string): void
-  {
+  exportToExcel(): void {
 
-    let fileName= `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.xlsx`;
+    let fileName = `${this.mainFilter.year}-${this.mainFilter.currency}-${this.selectedTableName}.xlsx`;
     /* pass here the table id */
-    let element = document.getElementById(tableName);
-    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
- 
+    let element = document.getElementById(this.selectedTableName);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
     /* generate workbook and add the worksheet */
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, fileName);
- 
+
   }
 
-  exportToPdf(tableName: string): void
-  {
-    let fileName= `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.pdf`;
+  exportToPdf(tableName: string): void {
+    let fileName = `${this.mainFilter.year}-${this.mainFilter.currency}-${tableName}.pdf`;
     /*const doc = new jsPDF('landscape');
     doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
     doc.setFont("Amiri");
@@ -299,7 +318,7 @@ export class SirketButcesiComponent {
     });
   }
 
-   printDiv(divId: string) {
+  printDiv(divId: string) {
     const css = `<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">`;
     const printContents = document.getElementById(divId)?.innerHTML;
@@ -314,13 +333,17 @@ export class SirketButcesiComponent {
       popupWindow?.window.focus();
       popupWindow?.document.write(pageContent);
       popupWindow?.document.close();
-      
+
     } else {
       popupWindow = window.open('', '_blank', 'width=1000,height=900');
       popupWindow?.document.open();
       popupWindow?.document.write(pageContent);
       popupWindow?.document.close();
     }
-    
+
+  }
+
+  selectedTab(tabName: any) {
+    this.selectedTableName = tabName;
   }
 }

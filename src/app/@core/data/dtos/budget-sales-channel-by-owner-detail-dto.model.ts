@@ -28,4 +28,6 @@ export interface BudgetSalesChannelByOwnerDetailDto {
     kasimReal: number;
     aralikBudget: number;
     aralikReal: number;
+    totalBudget: number;
+    totalReal: number;
 }
