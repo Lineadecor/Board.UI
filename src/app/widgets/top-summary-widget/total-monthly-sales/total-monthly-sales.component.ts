@@ -29,11 +29,11 @@ export class TotalMonthlySalesComponent {
 
     this.mainFilterService.mainFilter$.subscribe(data => {
       this.mainFilter = data;
-      this.getSalesSummaryData().subscribe(val=> {
+      this.getSalesSummaryData().subscribe(val => {
         this.monthlyData = val.results;
         this.getChart(this.chart3);
       })
-      
+
     });
 
 
@@ -55,25 +55,42 @@ export class TotalMonthlySalesComponent {
     const data = {
       labels: labels,
       datasets: [{
-        axis: 'y',
         label: 'Toplam',
         data: this.monthlyData.map(x => x.amount),
-        fill: true,
+        fill: false,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)'
+          'rgb(255, 99, 132)',
+          'rgb(149, 189, 255)',
+          'rgb(58, 152, 185)',
+          'rgb(231, 177, 10)',
+          'rgb(166, 31, 105)',
+          'rgb(242, 205, 92)',
+          'rgb(63, 73, 127)'
         ],
-        borderColor: [
-          'rgb(255, 99, 132)'
-        ],
-        borderWidth: 1
+        borderWidth: 0
       }]
     };
     if (chart === undefined || chart === null) {
       this.chart3 = new Chart("salesMonthlyChart", {
-        type: 'bar', 
+        type: 'bar',
         data: data,
+
         options: {
-          maintainAspectRatio: true,
+          scales: {
+            y:{
+              ticks: {
+                display: false
+              },
+              grid: {
+                display: false
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          },
           plugins: {
             legend: {
               display: false
@@ -82,7 +99,7 @@ export class TotalMonthlySalesComponent {
               color: 'black',
               rotation: 0,
               formatter: (value, ctx) => {
-                return this.currencyPipe.transform(value, this.mainFilter.currency,'symbol','1.0-0', 'tr') ;
+                return this.currencyPipe.transform(value, this.mainFilter.currency, 'symbol', '1.0-0', 'tr');
               }
             }
           }
