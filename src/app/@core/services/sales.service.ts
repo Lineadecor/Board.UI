@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ISalesService } from '../abstraction/isales-service';
 import { DashboardCompanyBudgetSummaryResponse } from '../data/responses/dashboard-company-budget-summary-response.model';
+import { MonthlyTotalSalesResponse } from '../data/responses/monthly-total-sales.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,29 @@ export class SalesService implements ISalesService {
     .set('IsQuantity', isQuantity);
 
     var dataResponse =  this.httpClient
-          .post<DashboardCompanyBudgetSummaryResponse>(`${environment.apiUrl}/${this.endpoint}/getsummary`, body.toString(), 
+          .post<DashboardCompanyBudgetSummaryResponse>(`${environment.apiUrl}/${this.endpoint}/get_summary`, body.toString(), 
           {
             headers: new HttpHeaders()
               .set('Content-Type', 'application/x-www-form-urlencoded')
           })
           .pipe(map(data => data as DashboardCompanyBudgetSummaryResponse));
+
+   return dataResponse;          
+  }
+
+
+  public GetMonthlySalesDataAsync(year: number, currency: string): Observable<MonthlyTotalSalesResponse> {
+    const body = new HttpParams()
+    .set('Year', year)
+    .set('Currency', currency);
+
+    var dataResponse =  this.httpClient
+          .post<MonthlyTotalSalesResponse>(`${environment.apiUrl}/${this.endpoint}/get_monthly_total_sales`, body.toString(), 
+          {
+            headers: new HttpHeaders()
+              .set('Content-Type', 'application/x-www-form-urlencoded')
+          })
+          .pipe(map(data => data as MonthlyTotalSalesResponse));
 
    return dataResponse;          
   }
