@@ -20,7 +20,7 @@ export class SalesChannelService implements ISalesChannelService {
   public GetSalesChannelsAsync(): Observable<GetSalesChannelsResponse> {
     
     var dataResponse =  this.httpClient
-          .get<GetSalesChannelsResponse>(`${environment.apiUrl}/${this.endpoint}/getchannels`)
+          .get<GetSalesChannelsResponse>(`${environment.apiUrl}/${this.endpoint}/get_channels`)
           .pipe(map(data => data as GetSalesChannelsResponse));
 
    return dataResponse;          
@@ -29,7 +29,7 @@ export class SalesChannelService implements ISalesChannelService {
   public GetSalesChannelAsync(channelId: number): Observable<GetSalesChannelResponse> {
     
     var dataResponse =  this.httpClient
-          .get<GetSalesChannelResponse>(`${environment.apiUrl}/${this.endpoint}/getchannel/${channelId}`)
+          .get<GetSalesChannelResponse>(`${environment.apiUrl}/${this.endpoint}/get_channel/${channelId}`)
           .pipe(map(data => data as GetSalesChannelResponse));
 
    return dataResponse;          
@@ -40,7 +40,7 @@ export class SalesChannelService implements ISalesChannelService {
     .set('Year', year)
     .set('Currency', currency)
     var dataResponse =  this.httpClient
-          .post<DashboardSalesChannelSummaryDataResponse>(`${environment.apiUrl}/${this.endpoint}/getsummary`, body.toString(), 
+          .post<DashboardSalesChannelSummaryDataResponse>(`${environment.apiUrl}/${this.endpoint}/get_summary`, body.toString(), 
           {
             headers: new HttpHeaders()
               .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -60,7 +60,7 @@ export class SalesChannelService implements ISalesChannelService {
     .set('IsQuantity',  isQuantity);
 
     var dataResponse =  this.httpClient
-          .post<SalesChannelOwnersCompanyBudgetMonthlyResponse>(`${environment.apiUrl}/${this.endpoint}/getmonthlybyowner`, body.toString(), 
+          .post<SalesChannelOwnersCompanyBudgetMonthlyResponse>(`${environment.apiUrl}/${this.endpoint}/get_monthly_by_owner`, body.toString(), 
           {
             headers: new HttpHeaders()
               .set('Content-Type', 'application/x-www-form-urlencoded')
@@ -78,7 +78,7 @@ export class SalesChannelService implements ISalesChannelService {
     .set('IsQuantity',  isQuantity);
 
     var dataResponse =  this.httpClient
-          .post<SalesChannelOwnersCompanyBudgetDetailResponse>(`${environment.apiUrl}/${this.endpoint}/getdetailsbyowner`, body.toString(), 
+          .post<SalesChannelOwnersCompanyBudgetDetailResponse>(`${environment.apiUrl}/${this.endpoint}/get_details_by_owner`, body.toString(), 
           {
             headers: new HttpHeaders()
               .set('Content-Type', 'application/x-www-form-urlencoded')

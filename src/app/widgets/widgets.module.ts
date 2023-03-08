@@ -20,6 +20,7 @@ import { TotalSalesBacksideComponent } from './top-summary-widget/total-sales/ba
 import { FlipCardModule } from "src/app/@core/components/components"
 import { TotalBudgetsBacksideComponent } from './top-summary-widget/total-budgets/backside/total-budgets-backside.component';
 import { TotalBudgetsFrontsideComponent } from './top-summary-widget/total-budgets/frontside/total-budgets-frontside.component';
+import { TotalMonthlySalesComponent } from './top-summary-widget/total-monthly-sales/total-monthly-sales.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { TotalBudgetsFrontsideComponent } from './top-summary-widget/total-budge
     TotalSalesBacksideComponent,
     TotalBudgetsBacksideComponent,
     TotalBudgetsFrontsideComponent,
+    TotalMonthlySalesComponent,
   ],
   imports: [
     CommonModule,
