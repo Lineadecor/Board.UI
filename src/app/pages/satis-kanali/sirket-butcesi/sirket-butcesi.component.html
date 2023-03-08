@@ -26,34 +26,34 @@
 
                 <c-nav variant="tabs">
                     <c-nav-item>
-                        <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>Aylık</a>
+                        <a [active]="true" [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink (click)="selectedTab('AylikSirketButcesi')">Aylık</a>
                     </c-nav-item>
                     <c-nav-item>
-                        <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink>Kırılımlı</a>
+                        <a [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="1" cNavLink  (click)="selectedTab('KirilimliSirketButcesi')">Kırılımlı</a>
                     </c-nav-item>
-                    <c-dropdown variant="nav-item">
-                        <a [routerLink] cDropdownToggle cNavLink>Görüntüleme Şekli : {{isQuantity ? "Miktar":
-                            "Tutar"}}</a>
-                        <ul cDropdownMenu>
-                            <li><a [routerLink] cDropdownItem (click)=" refreshData(false)">Tutar</a></li>
-                            <li><a [routerLink] cDropdownItem (click)=" refreshData(true)">Miktar</a></li>
-                        </ul>
-                    </c-dropdown>
+                    <div class="card-options">
+                            <button cButton class="float-end" color="primary" (click)="exportToExcel()">
+                                <fa-icon [icon]="['fas', 'cloud-arrow-down']"></fa-icon>
+                            </button>
+
+                            <form [formGroup]="viewTypeRdGrp">
+                                <c-button-group class="float-end me-3" role="group">
+                                    <input class="btn-check" formControlName="viewTypeGrp" type="radio" value="Tutar" />
+                                    <label (click)="refreshData(false)" cButton cFormCheckLabel color="secondary"
+                                        variant="outline">Tutar</label>
+
+                                    <input class="btn-check" formControlName="viewTypeGrp" type="radio"
+                                        value="Miktar" />
+                                    <label (click)=" refreshData(true)" cButton cFormCheckLabel color="secondary"
+                                        variant="outline">Miktar</label>
+                                </c-button-group>
+                            </form>
+                        
+                    </div>
                 </c-nav>
                 <c-tab-content #tabContent="cTabContent">
                     <c-tab-pane class="p-3">
-                        <div style="display: block; padding: 0.5rem;">
-                            <button class="export-button xlsx-button" (click)="exportToExcel('AylikSirketButcesi')" cButton
-                                color="light" variant="outline" cTooltip="Excel'e aktar">
-                            </button>
-                            <button class="export-button pdf-button" (click)="exportToPdf('AylikSirketButcesi')" cButton
-                                color="light" variant="outline" cTooltip="Pdf'e aktar">
-                            </button>
-                            <button class="export-button print-button" (click)="printDiv('dvAylik')" cButton color="light"
-                                variant="outline" cTooltip="Yazdır">
-
-                            </button>
-                        </div>
+                        <c-row style="margin-top:3px;">
                         <div id="dvAylik">
                             <table id="AylikSirketButcesi" [hover]="true" [responsive]="true" [striped]="true"
                                 align="middle" cTable class="mb-0 border">
@@ -92,20 +92,9 @@
                                 </tbody>
                             </table>
                         </div>
+                    </c-row>
                     </c-tab-pane>
-                    <c-tab-pane class="p-3">
-                        <div style="display: block; padding: 0.5rem;">
-                            <button class="export-button xlsx-button" (click)="exportToExcel('KirilimliSirketButcesi')" cButton
-                                color="light" variant="outline" cTooltip="Excel'e aktar">
-
-                            </button>
-                            <button class="export-button pdf-button" (click)="exportToPdf('KirilimliSirketButcesi')" cButton
-                                color="light" variant="outline" cTooltip="Pdf'e aktar">
-                            </button>
-                            <button class="export-button print-button" (click)="printDiv('dvKirilimli')" cButton color="light"
-                                variant="outline" cTooltip="Yazdır">
-                            </button>
-                        </div>
+                    <c-tab-pane class="p-3" >
                         <div id="dvKirilimli">
                             <table id="KirilimliSirketButcesi" [responsive]="true" bordered cTable
                                 style="width: max-content;">
@@ -114,6 +103,7 @@
                                         <th colspan="3" style="width: 400px;"></th>
                                         <th *ngFor="let month of months | slice:1;" colspan="2" class="text-center">
                                             {{month}}</th>
+                                        <th class="text-center" colspan="2">Toplam</th>
                                     </tr>
                                 </thead>
                                 <tbody [innerHTML]="pivotTableData">
