@@ -12,6 +12,7 @@ import { MainFilterService } from 'src/app/@core/services/filter-values.service'
 export class TotalSalesBacksideComponent {
   @Input() data: Array<CompanyBudgetSummaryDto> = new Array<CompanyBudgetSummaryDto>();
 
+
   public chart2: any;
   public totalAmount = 0;
 

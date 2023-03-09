@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CompanyBudgetSummaryDto } from 'src/app/@core/data/dtos/company-budget-summary-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
@@ -10,9 +11,9 @@ import { SalesService } from 'src/app/@core/services/sales.service';
   templateUrl: './total-budgets-frontside.component.html',
   styleUrls: ['./total-budgets-frontside.component.scss']
 })
-export class TotalBudgetsFrontsideComponent implements OnChanges {
+export class TotalBudgetsFrontsideComponent implements OnInit, OnChanges {
   @Input() data: Array<CompanyBudgetSummaryDto> = new Array<CompanyBudgetSummaryDto>();
-
+  @Input() loading: any;
 
   public totalBudgets = 0;
   public totalRealized = 0;
@@ -21,6 +22,7 @@ export class TotalBudgetsFrontsideComponent implements OnChanges {
   mainFilter = new DefaultFilter();
 
   constructor(private mainFilterService: MainFilterService,
+    private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef) {
 
     this.mainFilterService.mainFilter$.subscribe(data => {
@@ -28,6 +30,9 @@ export class TotalBudgetsFrontsideComponent implements OnChanges {
 
     });
 
+  }
+  ngOnInit(): void {
+    this.spinner.show("sp2");
   }
 
   ngOnChanges(changes: SimpleChanges) {

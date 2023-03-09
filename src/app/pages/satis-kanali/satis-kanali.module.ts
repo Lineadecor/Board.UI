@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '@coreui/icons-angular';
 import { SirketButcesiComponent } from './sirket-butcesi/sirket-butcesi.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TableModule,
     HttpClientModule,
     FormsModule,
+    NgxSpinnerModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'tr' },

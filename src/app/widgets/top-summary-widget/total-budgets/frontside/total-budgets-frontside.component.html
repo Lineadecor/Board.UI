@@ -1,4 +1,5 @@
 <c-card class="mb-4 card" style="--cui-card-cap-bg:#00aced; color: white;">
+  <ngx-spinner name="sp2" [fullScreen]="false" type="ball-scale-multiple" size="medium" [showSpinner]="loading"></ngx-spinner>
   <c-card-header class="card-header position-relative d-flex justify-content-center align-items-center pad-top-xs">
     <c-col class="card-body" style="padding: 0.2rem !important;">
       <div *ngFor="let saleData of salesSummaryData;">

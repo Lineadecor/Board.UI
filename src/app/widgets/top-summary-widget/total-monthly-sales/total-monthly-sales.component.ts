@@ -1,6 +1,7 @@
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectorRef, Component, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { SalesMonthlyDto } from 'src/app/@core/data/dtos/sales-monthly-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
@@ -13,16 +14,17 @@ import { GlobalVariables } from 'src/global';
   styleUrls: ['./total-monthly-sales.component.scss'],
   providers: [CurrencyPipe]
 })
-export class TotalMonthlySalesComponent {
+export class TotalMonthlySalesComponent implements OnInit {
 
   public chart3: any;
 
   monthlyData = new Array<SalesMonthlyDto>()
 
   mainFilter = new DefaultFilter();
-
+loading: boolean = true;
   constructor(private mainFilterService: MainFilterService,
     private salesService: SalesService,
+    private spinner: NgxSpinnerService,
     private global: GlobalVariables,
     private currencyPipe: CurrencyPipe,
     private cd: ChangeDetectorRef) {
@@ -32,12 +34,15 @@ export class TotalMonthlySalesComponent {
       this.getSalesSummaryData().subscribe(val => {
         this.monthlyData = val.results;
         this.getChart(this.chart3);
+        this.loading = false;
       })
 
     });
 
-
-
+  }
+  ngOnInit(): void {
+    this.spinner.show("sp3");
+    
   }
 
 

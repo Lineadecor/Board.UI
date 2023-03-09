@@ -1,6 +1,8 @@
 <c-card style="height: 225px;">
   <c-card-body>
+    <ngx-spinner name="sp1" [fullScreen]="false" type="ball-scale-multiple" size="medium" [showSpinner]="loading"></ngx-spinner>
     <c-container>
+      
       <c-row>
         <c-col><h4 cCardTitle>{{totalSales | currency: mainFilter.currency :'symbol':'4.0-0':'tr'}}</h4></c-col>
         <c-col class="text-end">Toplam Satış Tutarı</c-col>
