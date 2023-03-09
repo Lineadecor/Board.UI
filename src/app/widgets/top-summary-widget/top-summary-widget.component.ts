@@ -18,6 +18,7 @@ export class TopSummaryWidgetComponent implements OnInit{
 
   public salesAmountSummaryData: Array<CompanyBudgetSummaryDto>;
   public salesQuantitySummaryData:Array<CompanyBudgetSummaryDto>;
+  public isSalesLoaded: boolean = false;
 
   constructor(private mainFilterService: MainFilterService,
     private salesService: SalesService) {
@@ -37,6 +38,8 @@ export class TopSummaryWidgetComponent implements OnInit{
         } else {
           console.error("Data alınamadı");
         }
+        this.isSalesLoaded = true;
+       
       });
 
     this.getSalesSummaryData(true).subscribe(

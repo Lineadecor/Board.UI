@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BudgetSalesChannelByOwnerDetailDto } from 'src/app/@core/data/dtos/budget-sales-channel-by-owner-detail-dto.model';
 import { BudgetSalesChannelByOwnerMonthlyDto } from 'src/app/@core/data/dtos/budget-sales-channel-by-owner-monthly-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
@@ -16,6 +16,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-sirket-butcesi',
@@ -24,10 +25,12 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
   encapsulation: ViewEncapsulation.None,
   providers: [CurrencyPipe, DecimalPipe,]
 })
-export class SirketButcesiComponent {
+export class SirketButcesiComponent implements OnInit {
 
   channelId: number;
   channel: SalesChannelDto;
+  loading: boolean = true;
+
   public isQuantity: boolean = false;
   public viewTypeRdGrp = new UntypedFormGroup({
     viewTypeGrp: new UntypedFormControl('Tutar')
@@ -45,6 +48,7 @@ export class SirketButcesiComponent {
     private currencyPipe: CurrencyPipe,
     private numberPipe: DecimalPipe,
     private library: FaIconLibrary,
+    private spinner: NgxSpinnerService,
   ) {
     this.library.addIconPacks(fas, far);
     this.mainFilterService.mainFilter$.subscribe(data => {
@@ -63,6 +67,7 @@ export class SirketButcesiComponent {
 
   ngOnInit(): void {
     this.refreshData(false);
+    this.spinner.show("spBudgets");
   }
 
   public refreshData(param: boolean) {
@@ -101,7 +106,6 @@ export class SirketButcesiComponent {
 
         console.error("Data alınamadı");
       }
-
     });
 
   }
@@ -118,7 +122,7 @@ export class SirketButcesiComponent {
       } else {
         console.error("Data alınamadı");
       }
-
+      this.loading = false;
     });
 
   }
@@ -169,7 +173,7 @@ export class SirketButcesiComponent {
         distPartData.forEach(value => {
           let partText = (value.part?.startsWith(" | ") ? value.part?.replace(" | ", "") : value.part) as string;
           partText = partText?.replaceAll(" | ", "<br/>");
-          
+
           tableString += `<td>${partText}</td>`;
           if (this.isQuantity) {
             tableString += `<td class="text-right">${this.numberPipe.transform(value.ocakBudget, '1.0-0')}</td>`;

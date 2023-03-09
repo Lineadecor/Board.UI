@@ -21,7 +21,8 @@ import { FlipCardModule } from "src/app/@core/components/components"
 import { TotalBudgetsBacksideComponent } from './top-summary-widget/total-budgets/backside/total-budgets-backside.component';
 import { TotalBudgetsFrontsideComponent } from './top-summary-widget/total-budgets/frontside/total-budgets-frontside.component';
 import { TotalMonthlySalesComponent } from './top-summary-widget/total-monthly-sales/total-monthly-sales.component';
-
+// Import library module
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { TotalMonthlySalesComponent } from './top-summary-widget/total-monthly-s
     CardModule,
     ProgressModule,
     FlipCardModule,
+    NgxSpinnerModule,
   ],
   exports: [
     TopSummaryWidgetComponent

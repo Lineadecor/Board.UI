@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CompanyBudgetSummaryDto } from 'src/app/@core/data/dtos/company-budget-summary-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
@@ -11,6 +12,7 @@ import { MainFilterService } from 'src/app/@core/services/filter-values.service'
 })
 export class TotalSalesFrontsideComponent implements OnInit, OnChanges {
   @Input() data: Array<CompanyBudgetSummaryDto> = new Array<CompanyBudgetSummaryDto>();
+  @Input() loading: any;
 
   public chart: any;
   public totalSales = 0;
@@ -20,6 +22,7 @@ export class TotalSalesFrontsideComponent implements OnInit, OnChanges {
   mainFilter = new DefaultFilter();
 
   constructor(private mainFilterService: MainFilterService,
+    private spinner: NgxSpinnerService,
     private cd: ChangeDetectorRef) {
 
     this.mainFilterService.mainFilter$.subscribe(data => {
@@ -30,6 +33,7 @@ export class TotalSalesFrontsideComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.spinner.show("sp1");
     this.getChart(this.chart);
   }
 
@@ -39,7 +43,7 @@ export class TotalSalesFrontsideComponent implements OnInit, OnChanges {
       this.totalSales = this.viewData.reduce((sum, current) => sum + current.total_Realized, 0);
       this.getChart(this.chart);
     }
-
+      
   }
 
   getChart(chart: Chart) {
@@ -94,5 +98,6 @@ export class TotalSalesFrontsideComponent implements OnInit, OnChanges {
 
     }
   }
+
 
 }

@@ -5,6 +5,7 @@ import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
 import { SalesChannelService } from 'src/app/@core/services/sales-channel.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-yonetim-dashboard',
   templateUrl: './yonetim-dashboard.component.html',
@@ -13,9 +14,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 export class YonetimDashboardComponent  implements OnInit {
   
   public mainFilter :DefaultFilter= new DefaultFilter();
-  
+  loading: boolean = true;
   constructor(
     private salesChannelService: SalesChannelService,
+    private spinner: NgxSpinnerService,
     private mainFilterService: MainFilterService) {
       this.mainFilterService.mainFilter$.subscribe(data=> {
         this.mainFilter=data;
@@ -27,7 +29,7 @@ export class YonetimDashboardComponent  implements OnInit {
 
   ngOnInit(): void {
     this.getSalesChannelSummaryData();
-    
+    this.spinner.show("spSalesChannels");
   }
 
 
@@ -41,7 +43,7 @@ export class YonetimDashboardComponent  implements OnInit {
 
         console.error("Data alınamadı");
       }
-
+      this.loading = false;
     });
 
   }

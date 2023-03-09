@@ -4,6 +4,7 @@
       <c-card class="mb-4">
         <c-card-header>Satış Kanalları</c-card-header>
         <c-card-body>
+          <ngx-spinner name="spSalesChannels" [fullScreen]="false" type="ball-scale-multiple" size="medium" [showSpinner]="loading"></ngx-spinner>  
           <table
             [hover]="true"
             [responsive]="true"
@@ -11,6 +12,7 @@
             align="middle"
             cTable
             class="mb-0 border"
+            *ngIf="salesChannelSummaryData"
           >
             <thead cTableColor="light">
               <tr>

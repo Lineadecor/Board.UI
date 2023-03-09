@@ -1,20 +1,23 @@
 <c-row>
 
   <c-col md="12" xl="4">
-      <app-flip-card [flip]="flipDiv" (click)="onClickflipDiv()">
-        <div front><app-total-sales-frontside [data]="salesAmountSummaryData"></app-total-sales-frontside></div>
-        <div back><app-total-sales-backside [data]="salesQuantitySummaryData"></app-total-sales-backside></div>
-      </app-flip-card>
+    <app-flip-card [flip]="flipDiv" (click)="onClickflipDiv()">
+      <div front>
+        <app-total-sales-frontside [data]="salesAmountSummaryData" [loading]="!isSalesLoaded">
+        </app-total-sales-frontside>
+      </div>
+      <div back><app-total-sales-backside [data]="salesQuantitySummaryData"></app-total-sales-backside></div>
+    </app-flip-card>
   </c-col>
   <c-col md="12" xl="4">
     <app-flip-card [flip]="flipDiv2" (click)="onClickflipDiv2()">
-      <div front><app-total-budgets-frontside [data]="salesAmountSummaryData"></app-total-budgets-frontside></div>
+      <div front><app-total-budgets-frontside [data]="salesAmountSummaryData" [loading]="!isSalesLoaded"></app-total-budgets-frontside></div>
       <div back><app-total-budgets-backside [data]="salesQuantitySummaryData"></app-total-budgets-backside></div>
     </app-flip-card>
   </c-col>
   <c-col md="12" xl="4">
-    
-    <app-total-monthly-sales></app-total-monthly-sales>    
-  
+
+    <app-total-monthly-sales></app-total-monthly-sales>
+
   </c-col>
 </c-row>
