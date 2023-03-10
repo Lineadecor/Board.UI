@@ -35,9 +35,10 @@ export class SalesChannelService implements ISalesChannelService {
    return dataResponse;          
   }
 
-  public GetDashboardSummaryDataAsync(year: number, currency: string): Observable<DashboardSalesChannelSummaryDataResponse> {
+  public GetDashboardSummaryDataAsync(year: number, months: string, currency: string): Observable<DashboardSalesChannelSummaryDataResponse> {
     const body = new HttpParams()
     .set('Year', year)
+    .set('Months', months)
     .set('Currency', currency)
     var dataResponse =  this.httpClient
           .post<DashboardSalesChannelSummaryDataResponse>(`${environment.apiUrl}/${this.endpoint}/get_summary`, body.toString(), 
