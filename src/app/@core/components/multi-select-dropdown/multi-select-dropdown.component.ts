@@ -59,6 +59,7 @@ constructor(private cd: ChangeDetectorRef) {
     this.selectedItemText = new Array<string>();
 
     if(this.isAllSelected) {
+      
       this.list.forEach(value=>{ 
         this.checkedList.push({value: value.value, checked: true, name: value.name});
         this.selectedItemText.push(value.name);
