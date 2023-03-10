@@ -54,6 +54,7 @@ import { SatisKanaliModule } from './pages/satis-kanali/satis-kanali.module';
 import { MainFilterService } from './@core/services/filter-values.service';
 import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
 import { GlobalVariables } from 'src/global';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -104,6 +105,7 @@ const APP_CONTAINERS = [
     ListGroupModule,
     WidgetModule,
     CardModule,
+    NgxSpinnerModule,
     FontAwesomeModule,
     YonetimModule,
     SatisKanaliModule,

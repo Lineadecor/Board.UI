@@ -4,7 +4,7 @@ export class DefaultFilter {
     listMonths: number[];
     constructor() {
         this.year= 2023;
-        this.currency = "EUR";
+        this.currency = "TRY";
     }
 
     
