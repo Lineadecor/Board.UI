@@ -66,7 +66,7 @@ export class Top5SalesAgentsComponent {
     const data = {
       labels: labels,
       datasets: [{
-        label: 'Toplam',
+        label: 'Yüzde',
         data: this.top5AgentData.map(x => x.yuzde),
         fill: false,
         backgroundColor: [

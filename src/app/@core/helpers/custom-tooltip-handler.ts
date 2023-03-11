@@ -61,12 +61,12 @@ export class CustomTooltipHandler {
                 tableHead.appendChild(tr);
             }
 
-           
+           console.log(tooltip.body);
 
             const tableBody = document.createElement('tbody');
-            bodyLines.forEach((body: string, i: string | number) => {
+            bodyLines.forEach((body: string, i: number) => {
                 const colors = tooltip.labelColors[i];
-
+                
                 const span = document.createElement('span');
                 span.style.background = colors.backgroundColor;
                 span.style.borderColor = colors.borderColor;
@@ -83,7 +83,7 @@ export class CustomTooltipHandler {
                 const td = document.createElement('td');
                 td.style.borderWidth = "0";
 
-                const text = document.createTextNode("1- " + body);
+                const text = document.createTextNode(body);
 
                 td.appendChild(span);
                 td.appendChild(text);
