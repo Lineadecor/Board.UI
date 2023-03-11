@@ -2,38 +2,42 @@ import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SalesMonthlyDto } from 'src/app/@core/data/dtos/sales-monthly-dto.model';
+import { Top5SalesAgentDto } from 'src/app/@core/data/dtos/top5-sales-agent-dto.model';
 import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
 import { MainFilterService } from 'src/app/@core/services/filter-values.service';
-import { SalesService } from 'src/app/@core/services/sales.service';
+import { SalesChannelService } from 'src/app/@core/services/sales-channel.service';
 import { GlobalVariables } from 'src/global';
+import { CustomTooltipHandler } from "src/app/@core/helpers/custom-tooltip-handler";
 
 @Component({
-  selector: 'app-total-monthly-sales',
-  templateUrl: './total-monthly-sales.component.html',
-  styleUrls: ['./total-monthly-sales.component.scss'],
-  providers: [CurrencyPipe]
+  selector: 'app-top5-sales-agents',
+  templateUrl: './top5-sales-agents.component.html',
+  styleUrls: ['./top5-sales-agents.component.scss'],
+  providers: [CurrencyPipe, DecimalPipe]
 })
-export class TotalMonthlySalesComponent implements OnInit {
+export class Top5SalesAgentsComponent {
 
-  public chart3: any;
+  public chart4: any;
 
-  monthlyData = new Array<SalesMonthlyDto>()
+  top5AgentData = new Array<Top5SalesAgentDto>()
 
   mainFilter = new DefaultFilter();
   loading: boolean = true;
   constructor(private mainFilterService: MainFilterService,
-    private salesService: SalesService,
+    private salesService: SalesChannelService,
     private spinner: NgxSpinnerService,
     private global: GlobalVariables,
     private currencyPipe: CurrencyPipe,
+    private numberPipe: DecimalPipe,
+    private toolTipHandler: CustomTooltipHandler,
     private cd: ChangeDetectorRef) {
 
     this.mainFilterService.mainFilter$.subscribe(data => {
       this.mainFilter = data;
-      this.getSalesSummaryData().subscribe(val => {
-        this.monthlyData = val.results;
-        this.getChart(this.chart3);
+      this.getTop5AgentData().subscribe(val => {
+        this.top5AgentData = val.results;
+        this.toolTipHandler.dataForLabel = val.results;
+        this.getChart(this.chart4);
         this.loading = false;
       })
 
@@ -46,22 +50,24 @@ export class TotalMonthlySalesComponent implements OnInit {
   }
 
 
-  getSalesSummaryData() {
-    return this.salesService.GetMonthlySalesDataAsync(
+  getTop5AgentData() {
+    return this.salesService.GetTop5SalesAgentsAsync(
       this.mainFilter.year,
+      this.mainFilter.listMonths.join(","),
       this.mainFilter.currency,
+      "1100"
     );
 
   }
 
   getChart(chart: Chart) {
 
-    const labels = this.monthlyData.map(x => this.global.months[x.month]);
+    const labels = this.top5AgentData.map(x => x.cariAdi.slice(0,10));
     const data = {
       labels: labels,
       datasets: [{
         label: 'Toplam',
-        data: this.monthlyData.map(x => x.amount),
+        data: this.top5AgentData.map(x => x.yuzde),
         fill: false,
         backgroundColor: [
           'rgb(255, 99, 132)',
@@ -76,13 +82,14 @@ export class TotalMonthlySalesComponent implements OnInit {
       }]
     };
     if (chart === undefined || chart === null) {
-      this.chart3 = new Chart("salesMonthlyChart", {
+      this.chart4 = new Chart("top5AgentChart", {
         type: 'bar',
         data: data,
 
         options: {
+          indexAxis: 'y',
           scales: {
-            y:{
+            x:{
               ticks: {
                 display: false
               },
@@ -90,7 +97,7 @@ export class TotalMonthlySalesComponent implements OnInit {
                 display: false
               }
             },
-            x: {
+            y: {
               grid: {
                 display: false
               }
@@ -104,15 +111,25 @@ export class TotalMonthlySalesComponent implements OnInit {
               color: 'black',
               rotation: 0,
               formatter: (value, ctx) => {
-                return this.currencyPipe.transform(value, this.mainFilter.currency, 'symbol', '1.0-0', 'tr');
+                
+                return "%" + this.numberPipe.transform(value, '1.0-0');
               }
+            },
+
+            
+            tooltip: {
+              enabled: false,
+              position: 'average',
+              titleColor: "white",
+              
+              external: this.toolTipHandler.externalTooltipHandler,
             }
           }
         }
       });
     } else {
-      this.chart3.data = data;
-      this.chart3.update("default");
+      this.chart4.data = data;
+      this.chart4.update("default");
     }
   }
 }

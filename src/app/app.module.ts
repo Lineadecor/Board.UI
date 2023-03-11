@@ -54,9 +54,8 @@ import { SatisKanaliModule } from './pages/satis-kanali/satis-kanali.module';
 import { MainFilterService } from './@core/services/filter-values.service';
 import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
 import { GlobalVariables } from 'src/global';
+import { CustomTooltipHandler } from './@core/helpers/custom-tooltip-handler';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
-
 
 registerLocaleData(localeTr);
 
@@ -71,7 +70,7 @@ const APP_CONTAINERS = [
   declarations: [
     AppComponent,
     MultiSelectDropdownComponent,
-    ...APP_CONTAINERS,
+    ...APP_CONTAINERS
     
   ],
   imports: [
@@ -116,7 +115,8 @@ const APP_CONTAINERS = [
     MainFilterService,
     { provide: LOCALE_ID, useValue: 'tr' },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: GlobalVariables}
+    { provide: GlobalVariables},
+    { provide: CustomTooltipHandler}
   ],
   bootstrap: [AppComponent]
 })

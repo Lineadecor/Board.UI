@@ -2,17 +2,19 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ISalesChannelService } from '../abstraction/isales-channel-service';
-import { DashboardSalesChannelSummaryDataResponse } from '../data/responses/dashboard-sales-channel-summary-data-response.model';
-import { SalesChannelOwnersCompanyBudgetMonthlyResponse } from '../data/responses/sales-channel-owners-company-budget-monthly-response.model';
-import { SalesChannelOwnersCompanyBudgetDetailResponse } from '../data/responses/sales-channel-owners-company-budget-detail-response.model';
-import { GetSalesChannelsResponse } from "../data/responses/get-sales-channels-response.model";
-import { GetSalesChannelResponse } from "../data/responses/get-sales-channel-response.model";
+import { DashboardSalesChannelSummaryDataResponse, 
+  GetSalesChannelResponse, 
+  GetSalesChannelsResponse,
+  GetTop5SalesAgentsResponse, 
+  SalesChannelOwnersCompanyBudgetDetailResponse, 
+  SalesChannelOwnersCompanyBudgetMonthlyResponse } from '../data/responses';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class SalesChannelService implements ISalesChannelService {
+export class SalesChannelService{
 
   constructor(private httpClient: HttpClient) { }
   endpoint = "SalesChannels";
@@ -71,7 +73,8 @@ export class SalesChannelService implements ISalesChannelService {
    return dataResponse;          
   }
 
-  public GetSalesChannelOwnersCompanyBudgetDetailAsync(year: number, currency: string, channelId: number, isQuantity: boolean): Observable<SalesChannelOwnersCompanyBudgetDetailResponse> {
+  public GetSalesChannelOwnersCompanyBudgetDetailAsync(year: number, currency: string, channelId: number, isQuantity: boolean)
+  : Observable<SalesChannelOwnersCompanyBudgetDetailResponse> {
     const body = new HttpParams()
     .set('Year', year)
     .set('Currency', currency)
@@ -85,6 +88,25 @@ export class SalesChannelService implements ISalesChannelService {
               .set('Content-Type', 'application/x-www-form-urlencoded')
           })
           .pipe(map(data => data as SalesChannelOwnersCompanyBudgetDetailResponse));
+
+   return dataResponse;          
+  }
+
+  public GetTop5SalesAgentsAsync(year: number, months: string, currency: string, salesOrganisation: string)
+  : Observable<GetTop5SalesAgentsResponse> {
+    const body = new HttpParams()
+    .set('Year', year)
+    .set('Months', months)
+    .set('Currency', currency)
+    .set('SalesOrganisation', salesOrganisation);
+
+    var dataResponse =  this.httpClient
+          .post<GetTop5SalesAgentsResponse>(`${environment.apiUrl}/${this.endpoint}/get_top5_sales_agent`, body.toString(), 
+          {
+            headers: new HttpHeaders()
+              .set('Content-Type', 'application/x-www-form-urlencoded')
+          })
+          .pipe(map(data => data as GetTop5SalesAgentsResponse));
 
    return dataResponse;          
   }
