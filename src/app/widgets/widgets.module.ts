@@ -23,6 +23,7 @@ import { TotalBudgetsFrontsideComponent } from './top-summary-widget/total-budge
 import { TotalMonthlySalesComponent } from './top-summary-widget/total-monthly-sales/total-monthly-sales.component';
 // Import library module
 import { NgxSpinnerModule } from "ngx-spinner";
+import { Top5SalesAgentsComponent } from './top-summary-widget/top5-sales-agents/top5-sales-agents.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     TotalBudgetsBacksideComponent,
     TotalBudgetsFrontsideComponent,
     TotalMonthlySalesComponent,
+    Top5SalesAgentsComponent,
   ],
   imports: [
     CommonModule,

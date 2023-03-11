@@ -2,19 +2,20 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ISalesService } from '../abstraction/isales-service';
-import { DashboardCompanyBudgetSummaryResponse } from '../data/responses/dashboard-company-budget-summary-response.model';
-import { MonthlyTotalSalesResponse } from '../data/responses/monthly-total-sales.model';
+import { DashboardCompanyBudgetSummaryResponse, 
+  MonthlyTotalSalesResponse } from '../data/responses';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class SalesService implements ISalesService {
+export class SalesService{
 
   constructor(private httpClient: HttpClient) { }
   endpoint = "Sales";
 
-  public GetDashboardSummaryDataAsync(year: number,month:string, currency: string, isQuantity: boolean): Observable<DashboardCompanyBudgetSummaryResponse> {
+  public GetDashboardSummaryDataAsync(year: number,month:string, currency: string, isQuantity: boolean)
+  : Observable<DashboardCompanyBudgetSummaryResponse> {
     const body = new HttpParams()
     .set('Year', year)
     .set('Currency', currency)
@@ -33,7 +34,8 @@ export class SalesService implements ISalesService {
   }
 
 
-  public GetMonthlySalesDataAsync(year: number, currency: string): Observable<MonthlyTotalSalesResponse> {
+  public GetMonthlySalesDataAsync(year: number, currency: string)
+  : Observable<MonthlyTotalSalesResponse> {
     const body = new HttpParams()
     .set('Year', year)
     .set('Currency', currency);

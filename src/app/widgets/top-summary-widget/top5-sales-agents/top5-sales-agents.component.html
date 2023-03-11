@@ -1,0 +1,16 @@
+<c-card style="height: 225px;">
+    <ngx-spinner name="sp3" [fullScreen]="false" type="ball-scale-multiple" size="medium" [showSpinner]="loading"></ngx-spinner>
+    <c-card-body>
+        <c-container>
+            <c-row>
+                <c-col>
+                    <h6 cCardTitle>TOP 5 Bayii</h6>
+                </c-col>
+            </c-row>
+        </c-container>
+
+        <div cCardText class="chart-container" style="height:100%; width:100%">
+            <canvas id="top5AgentChart" height="155px">{{ chart4 }}</canvas>
+        </div>
+    </c-card-body>
+</c-card>
