@@ -51,10 +51,10 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
 
   shareCheckedList(item: any[]) {
-    console.log(item);
+    console.log("checked:" + item);
   }
   shareIndividualCheckedList(item: {}) {
-    console.log(item);
+    console.log( "indivudual:" + item);
   }
 
   setFilterVariables() {

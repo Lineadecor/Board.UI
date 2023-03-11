@@ -55,7 +55,7 @@ import { MainFilterService } from './@core/services/filter-values.service';
 import { MultiSelectDropdownComponent } from './@core/components/multi-select-dropdown/multi-select-dropdown.component';
 import { GlobalVariables } from 'src/global';
 import { CustomTooltipHandler } from './@core/helpers/custom-tooltip-handler';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 registerLocaleData(localeTr);
 
@@ -104,6 +104,7 @@ const APP_CONTAINERS = [
     ListGroupModule,
     WidgetModule,
     CardModule,
+    NgxSpinnerModule,
     FontAwesomeModule,
     YonetimModule,
     SatisKanaliModule,
