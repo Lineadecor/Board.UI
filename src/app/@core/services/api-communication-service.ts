@@ -1,46 +1,59 @@
 import { BaseResponse } from "../data/apiresponse.model";
-import { catchError, map, tap } from 'rxjs/operators';
+import {  map } from 'rxjs/operators';
 import { Observable } from "rxjs/internal/Observable";
 import { JSonUtil } from "../helpers/json-util";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
 
 export class ApiCommunicationService<TResponse extends BaseResponse> {
-    constructor(
-        private httpClient: HttpClient,
-        private url: string,
-        private endpoint: string,
-        ) {
-          
-        }
+  constructor(
+    private httpClient: HttpClient,
+    private endpoint: string,
+  ) { }
 
-      repsonse: any; 
-      public intialize(output: TResponse){
-        this.repsonse= output;
-      }
+  repsonse: any;
+  public intialize(output: TResponse) {
+    this.repsonse = output;
+  }
 
-      public post(item: any): Observable<TResponse> {
+  public post(method: string, params: any): Observable<TResponse> {
 
-        return this.httpClient
-          .post<TResponse>(`${this.url}/${this.endpoint}`, JSonUtil.serialize(item))
-          .pipe(map(data => JSonUtil.deSerialize<TResponse>(this.repsonse, data) as TResponse));
-      }
-    
-      public put(item: any): Observable<TResponse> {
-        return this.httpClient
-          .put<TResponse>(`${this.url}/${this.endpoint}/${item.id}`,
-            JSonUtil.serialize(item))
-          .pipe(map(data => JSonUtil.deSerialize<TResponse>(this.repsonse, data) as TResponse));
-      }
-    
-      public read(id: number): Observable<TResponse> {
-        return this.httpClient
-          .get(`${this.url}/${this.endpoint}/${id}`)
-          .pipe(map((data: any) => JSonUtil.deSerialize<TResponse>(this.repsonse, data) as TResponse));
-      }
-    
-      delete(id: number) {
-        return this.httpClient
-          .delete(`${this.url}/${this.endpoint}/${id}`);
-      }
-    
-    }
+    const body = new HttpParams({fromObject: params});
+
+    return this.httpClient
+          .post<TResponse>(`${environment.apiUrl}/${this.endpoint}/${method}`, body.toString(), 
+          {
+            headers: new HttpHeaders()
+              .set('Content-Type', 'application/x-www-form-urlencoded')
+          })
+          .pipe(map(data => data as TResponse));
+  }
+
+  public put(method: string, params: any): Observable<TResponse> {
+
+    const body = new HttpParams({fromObject: params});
+
+    return this.httpClient
+          .put<TResponse>(`${environment.apiUrl}/${this.endpoint}/${method}`, body.toString(), 
+          {
+            headers: new HttpHeaders()
+              .set('Content-Type', 'application/x-www-form-urlencoded')
+          })
+          .pipe(map(data => data as TResponse));
+  }
+
+  public get(method: string, id: number | null): Observable<TResponse> {
+    const url = `${environment.apiUrl}/${this.endpoint}/${method}${(id ? "/${id}" : "")}`;
+    return this.httpClient
+      .get(url)
+      .pipe(map((data: any) => JSonUtil.deSerialize<TResponse>(this.repsonse, data) as TResponse));
+  }
+
+  delete(id: number) {
+    return this.httpClient
+      .delete(`${environment.apiUrl}/${this.endpoint}/${id}`);
+  }
+
+  
+}

@@ -48,8 +48,9 @@ export class TotalMonthlySalesComponent implements OnInit {
 
   getSalesSummaryData() {
     return this.salesService.GetMonthlySalesDataAsync(
-      this.mainFilter.year,
-      this.mainFilter.currency,
+     {
+      year: this.mainFilter.year,
+      currency: this.mainFilter.currency},
     );
 
   }

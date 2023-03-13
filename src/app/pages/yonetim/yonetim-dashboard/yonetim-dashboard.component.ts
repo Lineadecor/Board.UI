@@ -35,9 +35,9 @@ export class YonetimDashboardComponent  implements OnInit {
 
   getSalesChannelSummaryData() {
     var respose = this.salesChannelService.GetDashboardSummaryDataAsync(
-      this.mainFilter.year, 
-      this.mainFilter.listMonths.join(","), 
-      this.mainFilter.currency);
+      {year: this.mainFilter.year, 
+      months: this.mainFilter.listMonths.join(","), 
+      currency: this.mainFilter.currency});
       
     respose.subscribe(data => {
       if(data.isSuccess) {

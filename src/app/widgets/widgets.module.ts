@@ -24,6 +24,8 @@ import { TotalMonthlySalesComponent } from './top-summary-widget/total-monthly-s
 // Import library module
 import { NgxSpinnerModule } from "ngx-spinner";
 import { Top5SalesAgentsComponent } from './top-summary-widget/top5-sales-agents/top5-sales-agents.component';
+import { DomesticSalesMapComponent } from './map-view-widgets/domestic-sales-map/domestic-sales-map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { Top5SalesAgentsComponent } from './top-summary-widget/top5-sales-agents
     TotalBudgetsFrontsideComponent,
     TotalMonthlySalesComponent,
     Top5SalesAgentsComponent,
+    DomesticSalesMapComponent,
   ],
   imports: [
     CommonModule,
@@ -50,9 +53,11 @@ import { Top5SalesAgentsComponent } from './top-summary-widget/top5-sales-agents
     ProgressModule,
     FlipCardModule,
     NgxSpinnerModule,
+    LeafletModule,   
   ],
   exports: [
-    TopSummaryWidgetComponent
+    TopSummaryWidgetComponent,
+    DomesticSalesMapComponent
   ]
 })
 export class WidgetsModule {
