@@ -43,7 +43,7 @@ export class SalesChannelService {
   }
 
   public GetSalesChannelOwnersCompanyBudgetMonthlyAsync
-    (params: { year: number, currency: string, channelId: number, isQuantity: boolean })
+    (params: { year: number, currency: string, salesChannelId: number, isQuantity: boolean })
     : Observable<SalesChannelOwnersCompanyBudgetMonthlyResponse> {
 
     var service = new ApiCommunicationService<SalesChannelOwnersCompanyBudgetMonthlyResponse>(this.httpClient, this.endpoint);
@@ -52,7 +52,7 @@ export class SalesChannelService {
   }
 
   public GetSalesChannelOwnersCompanyBudgetDetailAsync
-    (params: { year: number, currency: string, channelId: number, isQuantity: boolean })
+    (params: { year: number, currency: string, salesChannelId: number, isQuantity: boolean })
     : Observable<SalesChannelOwnersCompanyBudgetDetailResponse> {
     var service = new ApiCommunicationService<SalesChannelOwnersCompanyBudgetDetailResponse>(this.httpClient, this.endpoint);
     var dataResponse = service.post("get_details_by_owner", params);

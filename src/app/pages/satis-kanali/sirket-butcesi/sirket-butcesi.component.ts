@@ -99,7 +99,7 @@ export class SirketButcesiComponent implements OnInit {
       {
         year: this.mainFilter.year, 
         currency: this.mainFilter.currency,
-        channelId: this.channelId,
+        salesChannelId: this.channelId,
         isQuantity: this.isQuantity});
 
     respose.subscribe(data => {
@@ -118,7 +118,7 @@ export class SirketButcesiComponent implements OnInit {
     var respose = this.salesChannelService.GetSalesChannelOwnersCompanyBudgetDetailAsync(
       { year:this.mainFilter.year, 
         currency: this.mainFilter.currency, 
-        channelId: this.channelId,
+        salesChannelId: this.channelId,
         isQuantity: this.isQuantity});
 
     respose.subscribe(data => {

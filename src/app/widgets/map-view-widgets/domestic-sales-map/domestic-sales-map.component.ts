@@ -2,15 +2,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { MapService } from 'src/app/@core/services/map.service';
 import  * as L  from "leaflet";
+import { SalesChannelService } from 'src/app/@core/services/sales-channel.service';
+import { SalesAgentRegionDetailDto } from 'src/app/@core/data/dtos/sales-agents-region-dto.model';
+import { DefaultFilter } from 'src/app/@core/data/models/main-filter';
+import { MainFilterService } from 'src/app/@core/services/filter-values.service';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-domestic-sales-map',
   templateUrl: './domestic-sales-map.component.html',
   styleUrls: ['./domestic-sales-map.component.scss'],
-  providers:[MapService]
+  providers:[MapService, CurrencyPipe]
 })
 export class DomesticSalesMapComponent {
-  @Input() countryId: string;
 
   @Output() selectEvent: EventEmitter<any> = new EventEmitter();
 
@@ -18,6 +22,11 @@ export class DomesticSalesMapComponent {
   currentTheme: any;
   alive = true;
   selectedRegion;
+  tableData: SalesAgentRegionDetailDto[];
+
+  public mainFilter :DefaultFilter= new DefaultFilter();
+
+  selectedData: SalesAgentRegionDetailDto[];
 
   options = {
     scrollWheelZoom: false,
@@ -35,18 +44,50 @@ export class DomesticSalesMapComponent {
     maxBoundsViscosity: 1.0,
   };
 
-  constructor(private ecMapService: MapService) {
+  constructor(
+    private ecMapService: MapService,
+    private salesChannelService: SalesChannelService,
+    private currencyPipe: CurrencyPipe,
+    private mainFilterService: MainFilterService) {
+      this.mainFilterService.mainFilter$.subscribe(data=> {
+        this.mainFilter=data;
+       });
 
+       this.salesChannelService.GetSalesAgentRegionDetailAsync({
+        year: this.mainFilter.year,
+        months: this.mainFilter.listMonths.join(","),
+        salesOrganisation: "1100",
+        currency: this.mainFilter.currency,
+        region: "All"
+      }).subscribe(data=> {
+        if (data.isSuccess) {
+          this.tableData = data.results;
+          this.selectFeature(this.findFeatureLayerByRegionId("Istanbul"));
+         
+        } else {
+          console.error("Data alınamadı");
+        }
 
-    this.ecMapService.getCords()
+      });
+
+      this.ecMapService.getCords()
       .pipe(takeWhile(() => this.alive))
       .subscribe((cords: any) => {
 
         this.layers = [this.createGeoJsonLayer(cords)];
-        this.selectFeature(this.findFeatureLayerByCountryId(this.countryId));
+        
       });
+
+      
   }
 
+
+private getSalesAgents()
+{
+  if(this.selectedRegion){
+   this.selectedData = this.tableData.filter(val => val.bolge === this.selectedRegion.feature.properties.name); 
+  }
+}
 
   mapReady(map: L.Map) {
     // map.addControl(L.control.zoom({ position: 'bottomright' }));
@@ -69,7 +110,14 @@ export class DomesticSalesMapComponent {
           opacity: 1,
         }),
         onEachFeature: (f, l) => {
-          // l.bindPopup(f.properties.name);
+          var featureData =  this.tableData?.filter(val => val.bolge === f.properties.name);
+          var totalAmount =0;
+          if(featureData.length>0){
+            totalAmount = featureData.map(x => x.netTutar).reduce((a, b) => { return a + b; });
+          }
+          l.bindPopup("<b>" + f.properties.name + "</b><br/> Toplam: " 
+          + this.currencyPipe.transform(totalAmount, this.mainFilter.currency, 'symbol', '1.0-0', 'tr')
+          + "<br/>" + featureData.length + " Bayi");
           this.onEachFeature(f, l);
         },
       });
@@ -85,13 +133,13 @@ export class DomesticSalesMapComponent {
 
   private highlightFeature(featureLayer) {
     if (featureLayer) {
-      // featureLayer.openPopup();
+       featureLayer.openPopup();
       featureLayer.setStyle({
         weight: 3,
         fillColor: "#BBDFFF",
         color: "blue",
       });
-
+    
       if (!L.Browser.ie && !L.Browser.opera12 && !L.Browser.edge) {
         featureLayer.bringToFront();
       }
@@ -120,13 +168,15 @@ export class DomesticSalesMapComponent {
       this.resetHighlight(this.selectedRegion);
       this.highlightFeature(featureLayer);
       this.selectedRegion = featureLayer;
+      this.getSalesAgents();
+      
       if(featureLayer !==null){
         this.selectEvent.emit(featureLayer.feature.properties.name);
       }
     }
   }
 
-  private findFeatureLayerByCountryId(id) {
+  private findFeatureLayerByRegionId(id) {
     const layers = this.layers[0].getLayers();
     const featureLayer = layers.find(item => {
       return item.feature.id === id;

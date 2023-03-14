@@ -8,6 +8,7 @@ import {
   GridModule,
   ProgressModule,
   SharedModule,
+  TableModule,
   WidgetModule
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
@@ -51,6 +52,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     ButtonModule,
     CardModule,
     ProgressModule,
+    TableModule,
     FlipCardModule,
     NgxSpinnerModule,
     LeafletModule,   

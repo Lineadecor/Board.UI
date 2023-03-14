@@ -44,10 +44,10 @@ export class ApiCommunicationService<TResponse extends BaseResponse> {
   }
 
   public get(method: string, id: number | null): Observable<TResponse> {
-    const url = `${environment.apiUrl}/${this.endpoint}/${method}${(id ? "/${id}" : "")}`;
+    const url = `${environment.apiUrl}/${this.endpoint}/${method}${(id ? "/"+ id  : "")}`;
     return this.httpClient
       .get(url)
-      .pipe(map((data: any) => JSonUtil.deSerialize<TResponse>(this.repsonse, data) as TResponse));
+      .pipe(map(data => data as TResponse));
   }
 
   delete(id: number) {
