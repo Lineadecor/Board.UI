@@ -1,75 +1,76 @@
 <app-top-summary-widget></app-top-summary-widget>
 <c-row>
-    <c-col xs>
-      <c-card class="mb-4">
-        <c-card-header>Satış Kanalları</c-card-header>
-        <c-card-body>
-          <ngx-spinner name="spSalesChannels" [fullScreen]="false" type="ball-scale-multiple" size="medium" [showSpinner]="loading"></ngx-spinner>  
-          <table
-            [hover]="true"
-            [responsive]="true"
-            [striped]="true"
-            align="middle"
-            cTable
-            class="mb-0 border"
-            *ngIf="salesChannelSummaryData"
-          >
-            <thead cTableColor="light">
-              <tr>
-                <th class="text-center">
-                  
-                </th>
-                <th>Kanal</th>
-                <th>Bütçe Hedef</th>
-                <th class="text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let channel of salesChannelSummaryData; index as i">
-                <td class="text-center">
-                  <c-avatar
-                    size="md"
-                    src="./assets/img/avatars/{{ channel.picture }}"
-                  ></c-avatar>
-                </td>
-                <td>
-                  <div>{{ channel.channelName }}</div>
-                  <div class="small text-medium-emphasis text-nowrap">
-                    <span>
-                      {{ channel.owner }}
-                    </span>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex justify-content-between">
-                    <div class="float-start">
-                      <strong>{{ channel.percentage }}%</strong>
-                    </div>
-                    <div class="float-end ms-1 text-nowrap">
-                      <small class="text-medium-emphasis" style="font-weight: bold;">
-                        <span style="font-size: x-small;">Bütçe: </span>{{ channel.budget | currency: mainFilter.currency:'symbol':'4.0-0':'tr' }}
-                         / <span style="font-size: x-small;">Fiili: </span>{{ channel.realized | currency: mainFilter.currency :'symbol':'4.0-0':'tr' }}
-                      </small>
-                    </div>
-                  </div>
-                  <c-progress thin>
-                    <c-progress-bar
-                      [value]="channel.percentage"
-                      color="success"
-                    ></c-progress-bar>
-                  </c-progress>
-                </td>
-                <td>
-                  <div class="fw-semibold text-nowrap">
-                    <a [routerLink]="['/satis-kanali/sirket-butcesi']" [queryParams]="{id: channel.id}"  routerLinkActive="active" >
-                    <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
-                  </a></div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </c-card-body>
-      </c-card>
-    </c-col>
-  </c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-header>Satış Kanalları</c-card-header>
+      <c-card-body>
+        <ngx-spinner name="spSalesChannels" [fullScreen]="false" type="ball-scale-multiple" size="medium"
+          [showSpinner]="loading"></ngx-spinner>
+        <table [hover]="true" [responsive]="true" [striped]="true" align="middle" cTable class="mb-0 border"
+          *ngIf="salesChannelSummaryData">
+          <thead cTableColor="light">
+            <tr>
+              <th class="text-center">
 
+              </th>
+              <th>Kanal</th>
+              <th>Bütçe Hedef</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let channel of salesChannelSummaryData; index as i">
+              <td class="text-center">
+                <c-avatar size="md" src="./assets/img/avatars/{{ channel.picture }}"></c-avatar>
+              </td>
+              <td>
+                <div>{{ channel.channelName }}</div>
+                <div class="small text-medium-emphasis text-nowrap">
+                  <span>
+                    {{ channel.owner }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-between">
+                  <div class="float-start">
+                    <strong>{{ channel.percentage }}%</strong>
+                  </div>
+                  <div class="float-end ms-1 text-nowrap">
+                    <small class="text-medium-emphasis" style="font-weight: bold;">
+                      <span style="font-size: x-small;">Bütçe: </span>{{ channel.budget | currency:
+                      mainFilter.currency:'symbol':'4.0-0':'tr' }}
+                      / <span style="font-size: x-small;">Fiili: </span>{{ channel.realized | currency:
+                      mainFilter.currency :'symbol':'4.0-0':'tr' }}
+                    </small>
+                  </div>
+                </div>
+                <c-progress thin>
+                  <c-progress-bar [value]="channel.percentage" color="success"></c-progress-bar>
+                </c-progress>
+              </td>
+              <td>
+                <div class="fw-semibold text-nowrap">
+                  <a [routerLink]="['/satis-kanali/sirket-butcesi']" [queryParams]="{id: channel.id}"
+                    routerLinkActive="active">
+                    <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+<c-row>
+  <c-col xs>
+    <c-card class="mb-4">
+      <c-card-header>Yurtiçi Satışlar</c-card-header>
+      <c-card-body>
+        <app-domestic-sales-map></app-domestic-sales-map>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

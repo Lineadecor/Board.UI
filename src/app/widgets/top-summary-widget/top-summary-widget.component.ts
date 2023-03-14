@@ -11,13 +11,13 @@ import { SalesService } from 'src/app/@core/services/sales.service';
   styleUrls: ['./top-summary-widget.component.scss'],
   animations: FlipAnimation.animations
 })
-export class TopSummaryWidgetComponent implements OnInit{
+export class TopSummaryWidgetComponent implements OnInit {
   flipDiv = false;
   flipDiv2 = false;
   mainFilter = new DefaultFilter();
 
   public salesAmountSummaryData: Array<CompanyBudgetSummaryDto>;
-  public salesQuantitySummaryData:Array<CompanyBudgetSummaryDto>;
+  public salesQuantitySummaryData: Array<CompanyBudgetSummaryDto>;
   public isSalesLoaded: boolean = false;
 
   constructor(private mainFilterService: MainFilterService,
@@ -34,12 +34,12 @@ export class TopSummaryWidgetComponent implements OnInit{
     this.getSalesSummaryData(false).subscribe(
       data => {
         if (data.isSuccess) {
-          this.salesAmountSummaryData=data.results;
+          this.salesAmountSummaryData = data.results;
         } else {
           console.error("Data alınamadı");
         }
         this.isSalesLoaded = true;
-       
+
       });
 
     this.getSalesSummaryData(true).subscribe(
@@ -62,12 +62,14 @@ export class TopSummaryWidgetComponent implements OnInit{
     this.flipDiv2 = !this.flipDiv2;
   }
 
-  getSalesSummaryData(isQuaintity: boolean) {
+  getSalesSummaryData(isQuantity: boolean) {
     return this.salesService.GetDashboardSummaryDataAsync(
-      this.mainFilter.year,
-      this.mainFilter.listMonths.join(","),
-      this.mainFilter.currency,
-      isQuaintity);
+      {
+        year: this.mainFilter.year,
+        month: this.mainFilter.listMonths.join(","),
+        currency: this.mainFilter.currency,
+        isQuantity: isQuantity
+      });
 
   }
 }

@@ -96,7 +96,11 @@ export class SirketButcesiComponent implements OnInit {
 
   getSalesChannelSummaryData() {
     var respose = this.salesChannelService.GetSalesChannelOwnersCompanyBudgetMonthlyAsync(
-      this.mainFilter.year, this.mainFilter.currency, this.channelId, this.isQuantity);
+      {
+        year: this.mainFilter.year, 
+        currency: this.mainFilter.currency,
+        salesChannelId: this.channelId,
+        isQuantity: this.isQuantity});
 
     respose.subscribe(data => {
       if (data.isSuccess) {
@@ -112,7 +116,10 @@ export class SirketButcesiComponent implements OnInit {
 
   getSalesChannelDetailedData() {
     var respose = this.salesChannelService.GetSalesChannelOwnersCompanyBudgetDetailAsync(
-      this.mainFilter.year, this.mainFilter.currency, this.channelId, this.isQuantity);
+      { year:this.mainFilter.year, 
+        currency: this.mainFilter.currency, 
+        salesChannelId: this.channelId,
+        isQuantity: this.isQuantity});
 
     respose.subscribe(data => {
       if (data.isSuccess) {

@@ -51,11 +51,11 @@ export class Top5SalesAgentsComponent {
 
 
   getTop5AgentData() {
-    return this.salesService.GetTop5SalesAgentsAsync(
-      this.mainFilter.year,
-      this.mainFilter.listMonths.join(","),
-      this.mainFilter.currency,
-      "1100"
+    return this.salesService.GetTop5SalesAgentsAsync({
+      year: this.mainFilter.year,
+      months: this.mainFilter.listMonths.join(","),
+      currency: this.mainFilter.currency,
+      salesOrganisation: "1100"}
     );
 
   }
