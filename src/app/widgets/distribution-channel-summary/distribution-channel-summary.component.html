@@ -1,0 +1,18 @@
+<div class="card mb-3">
+    <div class="card-body" style="padding: 0.5rem;">
+        <c-row>
+            <c-col *ngFor="let dist of distData; let i=index;" [attr.data-index]="i">
+
+                <div class="border-start border-start-4 border-start-{{color[i]}} px-3"><small
+                        class="text-medium-emphasis">{{dist.dagitimKanaliAciklama}} 
+                        <a [routerLink]="['/satis-kanali/sirket-butcesi']" [queryParams]="{id: dist.dagitimKanali}"
+                        routerLinkActive="active" style="font-size: 14px;padding-left: 30px;">
+                        <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+                      </a></small>
+                    <div class="fs-5 fw-semibold">{{dist.tutar | currency: mainFilter.currency :'symbol':'4.0-0':'tr'}}
+                    </div>
+                </div>
+            </c-col>
+        </c-row>
+    </div>
+</div>
