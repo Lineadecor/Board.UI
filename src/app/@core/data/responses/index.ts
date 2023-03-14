@@ -7,3 +7,4 @@ export * from "./get-top5-sales-agents-response.model";
 export * from "./dashboard-company-budget-summary-response.model";
 export * from "./monthly-total-sales.model";
 export * from "./get-sales-agent-region-detail-response.model";
+export * from "./get-distribution-channel-summary-response.model"

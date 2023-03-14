@@ -27,6 +27,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { Top5SalesAgentsComponent } from './top-summary-widget/top5-sales-agents/top5-sales-agents.component';
 import { DomesticSalesMapComponent } from './map-view-widgets/domestic-sales-map/domestic-sales-map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { DistributionChannelSummaryComponent } from './distribution-channel-summary/distribution-channel-summary.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     TotalMonthlySalesComponent,
     Top5SalesAgentsComponent,
     DomesticSalesMapComponent,
+    DistributionChannelSummaryComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +55,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     ButtonModule,
     CardModule,
     ProgressModule,
+    FontAwesomeModule,
     TableModule,
     FlipCardModule,
     NgxSpinnerModule,
@@ -59,7 +63,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   ],
   exports: [
     TopSummaryWidgetComponent,
-    DomesticSalesMapComponent
+    DomesticSalesMapComponent,
+    DistributionChannelSummaryComponent
   ]
 })
 export class WidgetsModule {

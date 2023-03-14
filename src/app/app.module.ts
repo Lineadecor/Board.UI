@@ -56,6 +56,7 @@ import { MultiSelectDropdownComponent } from './@core/components/multi-select-dr
 import { GlobalVariables } from 'src/global';
 import { CustomTooltipHandler } from './@core/helpers/custom-tooltip-handler';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { DagitimKanaliModule } from './pages/dagitim-kanali/dagitim-kanali.module';
 
 registerLocaleData(localeTr);
 
@@ -71,7 +72,6 @@ const APP_CONTAINERS = [
     AppComponent,
     MultiSelectDropdownComponent,
     ...APP_CONTAINERS
-    
   ],
   imports: [
     BrowserModule,
@@ -108,6 +108,7 @@ const APP_CONTAINERS = [
     FontAwesomeModule,
     YonetimModule,
     SatisKanaliModule,
+    DagitimKanaliModule
   ],
   providers: [
     IconSetService, 

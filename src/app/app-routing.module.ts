@@ -24,6 +24,10 @@ const routes: Routes = [
         path: 'satis-kanali',
         loadChildren: () => import('./pages/satis-kanali/satis-kanali.module').then(m => m.SatisKanaliModule)
       },
+      {
+        path: 'dagitim-kanali',
+        loadChildren: () => import('./pages/dagitim-kanali/dagitim-kanali.module').then(m => m.DagitimKanaliModule)
+      },
     ],
   }
 ];
