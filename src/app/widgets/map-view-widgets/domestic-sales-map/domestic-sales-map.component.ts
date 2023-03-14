@@ -62,27 +62,28 @@ export class DomesticSalesMapComponent {
       }).subscribe(data=> {
         if (data.isSuccess) {
           this.tableData = data.results;
-          this.selectFeature(this.findFeatureLayerByRegionId("Istanbul"));
-         
+         this.getMap();
         } else {
           console.error("Data alınamadı");
         }
 
       });
-
-      this.ecMapService.getCords()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((cords: any) => {
-
-        this.layers = [this.createGeoJsonLayer(cords)];
-        
-      });
-
       
   }
 
+private getMap()
+{
+  this.ecMapService.getCords()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((cords: any) => {
+        this.layers = [this.createGeoJsonLayer(cords)];
+        this.selectFeature(this.findFeatureLayerByRegionId("Istanbul"));
+        
+      });
+}
 
-private getSalesAgents()
+
+private getSalesAgents() 
 {
   if(this.selectedRegion){
    this.selectedData = this.tableData.filter(val => val.bolge === this.selectedRegion.feature.properties.name); 
